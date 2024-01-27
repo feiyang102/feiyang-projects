@@ -1,0 +1,19 @@
+{
+  "name": "feiyang-projects",
+  "version": "0.0.1",
+  "description": "feiyang的练习项目",
+  "main": "index.js",
+  "scripts": {
+    "dev:apps/vue-app1": "pnpm --filter \"./apps/vue-app1\" dev",
+    "build:apps/vue-app1": "pnpm --filter \"./apps/vue-app1\" build",
+    "lint:apps/vue-app1": "pnpm --filter \"./apps/vue-app1\" lint",
+    "format:apps/vue-app1": "pnpm --filter \"./apps/vue-app1\" format",
+    "start:apps/react-app1": "pnpm --filter \"./apps/react-app1\" start"
+  },
+  "keywords": [],
+  "author": "FeiYang",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
