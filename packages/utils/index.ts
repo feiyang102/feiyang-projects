@@ -1,3 +1,4 @@
-export function getTimestamp(type: string): number {
-  return Date.now();
+export function getTimestamp(count: number) {
+  console.log(count);
+  console.log(Date.now());
 }

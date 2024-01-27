@@ -5,9 +5,11 @@ import ToolingIcon from './icons/IconTooling.vue'
 import EcosystemIcon from './icons/IconEcosystem.vue'
 import CommunityIcon from './icons/IconCommunity.vue'
 import SupportIcon from './icons/IconSupport.vue'
+import { getTimestamp } from '@feiyang/utils'
 </script>
 
 <template>
+  <button @click="getTimestamp(111)">getTimestamp</button>
   <WelcomeItem>
     <template #icon>
       <DocumentationIcon />

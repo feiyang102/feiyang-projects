@@ -1,2 +1,1 @@
-# projects
-练手项目
+# monorepo projects
