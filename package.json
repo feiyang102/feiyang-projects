@@ -8,7 +8,8 @@
     "build:apps/vue-app1": "pnpm --filter \"./apps/vue-app1\" build",
     "lint:apps/vue-app1": "pnpm --filter \"./apps/vue-app1\" lint",
     "format:apps/vue-app1": "pnpm --filter \"./apps/vue-app1\" format",
-    "start:apps/react-app1": "pnpm --filter \"./apps/react-app1\" start"
+    "start:apps/react-app1": "pnpm --filter \"./apps/react-app1\" start",
+    "start:apps/ssr-ssr-fc": "pnpm --filter \"./apps/ssr-ssr-fc\" start"
   },
   "keywords": [],
   "author": "FeiYang",
