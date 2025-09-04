@@ -5,6 +5,7 @@ declare global {
   const EffectScope: typeof import('vue')['EffectScope']
   const InvalidMatchPattern: typeof import('wxt/utils/match-patterns')['InvalidMatchPattern']
   const MatchPattern: typeof import('wxt/utils/match-patterns')['MatchPattern']
+  const MsgProxy: typeof import('/Users/lufei/programs/feiyang-projects/apps/browser_wxt/utils/msgProxy')['MsgProxy']
   const browser: typeof import('wxt/browser')['browser']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
@@ -33,6 +34,7 @@ declare global {
   const isRef: typeof import('vue')['isRef']
   const isShallow: typeof import('vue')['isShallow']
   const markRaw: typeof import('vue')['markRaw']
+  const msgProxy: typeof import('/Users/lufei/programs/feiyang-projects/apps/browser_wxt/utils/msgProxy')['msgProxy']
   const nextTick: typeof import('vue')['nextTick']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
@@ -108,6 +110,9 @@ declare global {
   // @ts-ignore
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, ShallowRef, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { MsgProxy } from '/Users/lufei/programs/feiyang-projects/apps/browser_wxt/utils/msgProxy'
+  import('/Users/lufei/programs/feiyang-projects/apps/browser_wxt/utils/msgProxy')
 }
 // for vue template auto import
 import { UnwrapRef } from 'vue'
@@ -117,6 +122,7 @@ declare module 'vue' {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly InvalidMatchPattern: UnwrapRef<typeof import('wxt/utils/match-patterns')['InvalidMatchPattern']>
     readonly MatchPattern: UnwrapRef<typeof import('wxt/utils/match-patterns')['MatchPattern']>
+    readonly MsgProxy: UnwrapRef<typeof import('/Users/lufei/programs/feiyang-projects/apps/browser_wxt/utils/msgProxy')['MsgProxy']>
     readonly browser: UnwrapRef<typeof import('wxt/browser')['browser']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
@@ -145,6 +151,7 @@ declare module 'vue' {
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
     readonly isShallow: UnwrapRef<typeof import('vue')['isShallow']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
+    readonly msgProxy: UnwrapRef<typeof import('/Users/lufei/programs/feiyang-projects/apps/browser_wxt/utils/msgProxy')['msgProxy']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>

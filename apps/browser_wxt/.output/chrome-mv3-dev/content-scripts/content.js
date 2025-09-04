@@ -159,7 +159,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       return super.size;
     }
   }
-  function isPlainObject$3(value) {
+  function isPlainObject$2(value) {
     if (value === null || typeof value !== "object") {
       return false;
     }
@@ -176,7 +176,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     return true;
   }
   function _defu(baseObject, defaults, namespace = ".", merger) {
-    if (!isPlainObject$3(defaults)) {
+    if (!isPlainObject$2(defaults)) {
       return _defu(baseObject, {}, namespace, merger);
     }
     const object = Object.assign({}, defaults);
@@ -193,7 +193,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       }
       if (Array.isArray(value) && Array.isArray(object[key])) {
         object[key] = [...value, ...object[key]];
-      } else if (isPlainObject$3(value) && isPlainObject$3(object[key])) {
+      } else if (isPlainObject$2(value) && isPlainObject$2(object[key])) {
         object[key] = _defu(
           value,
           object[key],
@@ -607,7 +607,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   }
   const EMPTY_OBJ = Object.freeze({});
   const EMPTY_ARR = Object.freeze([]);
-  const NOOP$1 = () => {
+  const NOOP = () => {
   };
   const NO = () => false;
   const isOn = (key) => key.charCodeAt(0) === 111 && key.charCodeAt(1) === 110 && // uppercase letter
@@ -620,26 +620,26 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       arr.splice(i, 1);
     }
   };
-  const hasOwnProperty$f = Object.prototype.hasOwnProperty;
-  const hasOwn$1 = (val, key) => hasOwnProperty$f.call(val, key);
-  const isArray$2 = Array.isArray;
-  const isMap$1 = (val) => toTypeString$1(val) === "[object Map]";
-  const isSet$1 = (val) => toTypeString$1(val) === "[object Set]";
-  const isDate$1 = (val) => toTypeString$1(val) === "[object Date]";
-  const isFunction$3 = (val) => typeof val === "function";
-  const isString$2 = (val) => typeof val === "string";
+  const hasOwnProperty$e = Object.prototype.hasOwnProperty;
+  const hasOwn = (val, key) => hasOwnProperty$e.call(val, key);
+  const isArray$1 = Array.isArray;
+  const isMap$1 = (val) => toTypeString(val) === "[object Map]";
+  const isSet$1 = (val) => toTypeString(val) === "[object Set]";
+  const isDate = (val) => toTypeString(val) === "[object Date]";
+  const isFunction$2 = (val) => typeof val === "function";
+  const isString$1 = (val) => typeof val === "string";
   const isSymbol$1 = (val) => typeof val === "symbol";
-  const isObject$2 = (val) => val !== null && typeof val === "object";
-  const isPromise$1 = (val) => {
-    return (isObject$2(val) || isFunction$3(val)) && isFunction$3(val.then) && isFunction$3(val.catch);
+  const isObject$1 = (val) => val !== null && typeof val === "object";
+  const isPromise = (val) => {
+    return (isObject$1(val) || isFunction$2(val)) && isFunction$2(val.then) && isFunction$2(val.catch);
   };
-  const objectToString$2 = Object.prototype.toString;
-  const toTypeString$1 = (value) => objectToString$2.call(value);
+  const objectToString$1 = Object.prototype.toString;
+  const toTypeString = (value) => objectToString$1.call(value);
   const toRawType = (value) => {
-    return toTypeString$1(value).slice(8, -1);
+    return toTypeString(value).slice(8, -1);
   };
-  const isPlainObject$2 = (val) => toTypeString$1(val) === "[object Object]";
-  const isIntegerKey = (key) => isString$2(key) && key !== "NaN" && key[0] !== "-" && "" + parseInt(key, 10) === key;
+  const isPlainObject$1 = (val) => toTypeString(val) === "[object Object]";
+  const isIntegerKey = (key) => isString$1(key) && key !== "NaN" && key[0] !== "-" && "" + parseInt(key, 10) === key;
   const isReservedProp = /* @__PURE__ */ makeMap(
     // the leading comma is intentional so empty string "" is also included
     ",key,ref,ref_for,ref_key,onVnodeBeforeMount,onVnodeMounted,onVnodeBeforeUpdate,onVnodeUpdated,onVnodeBeforeUnmount,onVnodeUnmounted"
@@ -647,29 +647,29 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   const isBuiltInDirective = /* @__PURE__ */ makeMap(
     "bind,cloak,else-if,else,for,html,if,model,on,once,pre,show,slot,text,memo"
   );
-  const cacheStringFunction$1 = (fn2) => {
+  const cacheStringFunction = (fn2) => {
     const cache2 = /* @__PURE__ */ Object.create(null);
     return (str) => {
       const hit = cache2[str];
       return hit || (cache2[str] = fn2(str));
     };
   };
-  const camelizeRE$1 = /-(\w)/g;
-  const camelize$1 = cacheStringFunction$1(
+  const camelizeRE = /-(\w)/g;
+  const camelize = cacheStringFunction(
     (str) => {
-      return str.replace(camelizeRE$1, (_2, c2) => c2 ? c2.toUpperCase() : "");
+      return str.replace(camelizeRE, (_2, c2) => c2 ? c2.toUpperCase() : "");
     }
   );
-  const hyphenateRE$1 = /\B([A-Z])/g;
-  const hyphenate$1 = cacheStringFunction$1(
-    (str) => str.replace(hyphenateRE$1, "-$1").toLowerCase()
+  const hyphenateRE = /\B([A-Z])/g;
+  const hyphenate = cacheStringFunction(
+    (str) => str.replace(hyphenateRE, "-$1").toLowerCase()
   );
-  const capitalize$2 = cacheStringFunction$1((str) => {
+  const capitalize$1 = cacheStringFunction((str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   });
-  const toHandlerKey = cacheStringFunction$1(
+  const toHandlerKey = cacheStringFunction(
     (str) => {
-      const s2 = str ? `on${capitalize$2(str)}` : ``;
+      const s2 = str ? `on${capitalize$1(str)}` : ``;
       return s2;
     }
   );
@@ -692,7 +692,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     return isNaN(n) ? val : n;
   };
   const toNumber$1 = (val) => {
-    const n = isString$2(val) ? Number(val) : NaN;
+    const n = isString$1(val) ? Number(val) : NaN;
     return isNaN(n) ? val : n;
   };
   let _globalThis;
@@ -700,11 +700,11 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     return _globalThis || (_globalThis = typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {});
   };
   function normalizeStyle(value) {
-    if (isArray$2(value)) {
+    if (isArray$1(value)) {
       const res = {};
       for (let i = 0; i < value.length; i++) {
         const item = value[i];
-        const normalized = isString$2(item) ? parseStringStyle(item) : normalizeStyle(item);
+        const normalized = isString$1(item) ? parseStringStyle(item) : normalizeStyle(item);
         if (normalized) {
           for (const key in normalized) {
             res[key] = normalized[key];
@@ -712,7 +712,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         }
       }
       return res;
-    } else if (isString$2(value) || isObject$2(value)) {
+    } else if (isString$1(value) || isObject$1(value)) {
       return value;
     }
   }
@@ -731,16 +731,16 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   }
   function normalizeClass(value) {
     let res = "";
-    if (isString$2(value)) {
+    if (isString$1(value)) {
       res = value;
-    } else if (isArray$2(value)) {
+    } else if (isArray$1(value)) {
       for (let i = 0; i < value.length; i++) {
         const normalized = normalizeClass(value[i]);
         if (normalized) {
           res += normalized + " ";
         }
       }
-    } else if (isObject$2(value)) {
+    } else if (isObject$1(value)) {
       for (const name in value) {
         if (value[name]) {
           res += name + " ";
@@ -752,7 +752,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   function normalizeProps(props2) {
     if (!props2) return null;
     let { class: klass, style } = props2;
-    if (klass && !isString$2(klass)) {
+    if (klass && !isString$1(klass)) {
       props2.class = normalizeClass(klass);
     }
     if (style) {
@@ -781,8 +781,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   }
   function looseEqual(a2, b2) {
     if (a2 === b2) return true;
-    let aValidType = isDate$1(a2);
-    let bValidType = isDate$1(b2);
+    let aValidType = isDate(a2);
+    let bValidType = isDate(b2);
     if (aValidType || bValidType) {
       return aValidType && bValidType ? a2.getTime() === b2.getTime() : false;
     }
@@ -791,13 +791,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     if (aValidType || bValidType) {
       return a2 === b2;
     }
-    aValidType = isArray$2(a2);
-    bValidType = isArray$2(b2);
+    aValidType = isArray$1(a2);
+    bValidType = isArray$1(b2);
     if (aValidType || bValidType) {
       return aValidType && bValidType ? looseCompareArrays(a2, b2) : false;
     }
-    aValidType = isObject$2(a2);
-    bValidType = isObject$2(b2);
+    aValidType = isObject$1(a2);
+    bValidType = isObject$1(b2);
     if (aValidType || bValidType) {
       if (!aValidType || !bValidType) {
         return false;
@@ -824,7 +824,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     return !!(val && val["__v_isRef"] === true);
   };
   const toDisplayString = (val) => {
-    return isString$2(val) ? val : val == null ? "" : isArray$2(val) || isObject$2(val) && (val.toString === objectToString$2 || !isFunction$3(val.toString)) ? isRef$1(val) ? toDisplayString(val.value) : JSON.stringify(val, replacer, 2) : String(val);
+    return isString$1(val) ? val : val == null ? "" : isArray$1(val) || isObject$1(val) && (val.toString === objectToString$1 || !isFunction$2(val.toString)) ? isRef$1(val) ? toDisplayString(val.value) : JSON.stringify(val, replacer, 2) : String(val);
   };
   const replacer = (_key, val) => {
     if (isRef$1(val)) {
@@ -845,7 +845,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       };
     } else if (isSymbol$1(val)) {
       return stringifySymbol(val);
-    } else if (isObject$2(val) && !isArray$2(val) && !isPlainObject$2(val)) {
+    } else if (isObject$1(val) && !isArray$1(val) && !isPlainObject$1(val)) {
       return String(val);
     }
     return val;
@@ -1452,7 +1452,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     if (type === "clear") {
       depsMap.forEach(run);
     } else {
-      const targetIsArray = isArray$2(target);
+      const targetIsArray = isArray$1(target);
       const isArrayIndex = targetIsArray && isIntegerKey(key);
       if (targetIsArray && key === "length") {
         const newLength = Number(newValue);
@@ -1518,7 +1518,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     },
     concat(...args) {
       return reactiveReadArray(this).concat(
-        ...args.map((x2) => isArray$2(x2) ? reactiveReadArray(x2) : x2)
+        ...args.map((x2) => isArray$1(x2) ? reactiveReadArray(x2) : x2)
       );
     },
     entries() {
@@ -1680,7 +1680,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   const builtInSymbols = new Set(
     /* @__PURE__ */ Object.getOwnPropertyNames(Symbol).filter((key) => key !== "arguments" && key !== "caller").map((key) => Symbol[key]).filter(isSymbol$1)
   );
-  function hasOwnProperty$e(key) {
+  function hasOwnProperty$d(key) {
     if (!isSymbol$1(key)) key = String(key);
     const obj = toRaw(this);
     track(obj, "has", key);
@@ -1708,14 +1708,14 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         }
         return;
       }
-      const targetIsArray = isArray$2(target);
+      const targetIsArray = isArray$1(target);
       if (!isReadonly2) {
         let fn2;
         if (targetIsArray && (fn2 = arrayInstrumentations[key])) {
           return fn2;
         }
         if (key === "hasOwnProperty") {
-          return hasOwnProperty$e;
+          return hasOwnProperty$d;
         }
       }
       const res = Reflect.get(
@@ -1738,7 +1738,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       if (isRef(res)) {
         return targetIsArray && isIntegerKey(key) ? res : res.value;
       }
-      if (isObject$2(res)) {
+      if (isObject$1(res)) {
         return isReadonly2 ? readonly(res) : reactive(res);
       }
       return res;
@@ -1756,7 +1756,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           oldValue = toRaw(oldValue);
           value = toRaw(value);
         }
-        if (!isArray$2(target) && isRef(oldValue) && !isRef(value)) {
+        if (!isArray$1(target) && isRef(oldValue) && !isRef(value)) {
           if (isOldValueReadonly) {
             return false;
           } else {
@@ -1765,7 +1765,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           }
         }
       }
-      const hadKey = isArray$2(target) && isIntegerKey(key) ? Number(key) < target.length : hasOwn$1(target, key);
+      const hadKey = isArray$1(target) && isIntegerKey(key) ? Number(key) < target.length : hasOwn(target, key);
       const result2 = Reflect.set(
         target,
         key,
@@ -1782,7 +1782,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       return result2;
     }
     deleteProperty(target, key) {
-      const hadKey = hasOwn$1(target, key);
+      const hadKey = hasOwn(target, key);
       const oldValue = target[key];
       const result2 = Reflect.deleteProperty(target, key);
       if (result2 && hadKey) {
@@ -1801,7 +1801,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       track(
         target,
         "iterate",
-        isArray$2(target) ? "length" : ITERATE_KEY
+        isArray$1(target) ? "length" : ITERATE_KEY
       );
       return Reflect.ownKeys(target);
     }
@@ -1870,7 +1870,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       {
         const key = args[0] ? `on key "${args[0]}" ` : ``;
         warn$2(
-          `${capitalize$2(type)} operation ${key}failed: target is readonly.`,
+          `${capitalize$1(type)} operation ${key}failed: target is readonly.`,
           toRaw(this)
         );
       }
@@ -2027,7 +2027,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         return target;
       }
       return Reflect.get(
-        hasOwn$1(instrumentations, key) && key in target ? instrumentations : target,
+        hasOwn(instrumentations, key) && key in target ? instrumentations : target,
         key,
         receiver
       );
@@ -2115,7 +2115,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     );
   }
   function createReactiveObject(target, isReadonly2, baseHandlers, collectionHandlers, proxyMap) {
-    if (!isObject$2(target)) {
+    if (!isObject$1(target)) {
       {
         warn$2(
           `value cannot be made ${isReadonly2 ? "readonly" : "reactive"}: ${String(
@@ -2163,13 +2163,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     return raw ? toRaw(raw) : observed;
   }
   function markRaw(value) {
-    if (!hasOwn$1(value, "__v_skip") && Object.isExtensible(value)) {
+    if (!hasOwn(value, "__v_skip") && Object.isExtensible(value)) {
       def(value, "__v_skip", true);
     }
     return value;
   }
-  const toReactive = (value) => isObject$2(value) ? reactive(value) : value;
-  const toReadonly = (value) => isObject$2(value) ? readonly(value) : value;
+  const toReactive = (value) => isObject$1(value) ? reactive(value) : value;
+  const toReadonly = (value) => isObject$1(value) ? readonly(value) : value;
   function isRef(r) {
     return r ? r["__v_isRef"] === true : false;
   }
@@ -2276,7 +2276,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     if (!isProxy(object)) {
       warn$2(`toRefs() expects a reactive object but received a plain one.`);
     }
-    const ret = isArray$2(object) ? new Array(object.length) : {};
+    const ret = isArray$1(object) ? new Array(object.length) : {};
     for (const key in object) {
       ret[key] = propertyToRef(object, key);
     }
@@ -2315,9 +2315,9 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   function toRef(source, key, defaultValue) {
     if (isRef(source)) {
       return source;
-    } else if (isFunction$3(source)) {
+    } else if (isFunction$2(source)) {
       return new GetterRefImpl(source);
-    } else if (isObject$2(source) && arguments.length > 1) {
+    } else if (isObject$1(source) && arguments.length > 1) {
       return propertyToRef(source, key, defaultValue);
     } else {
       return ref(source);
@@ -2377,7 +2377,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   function computed$1(getterOrOptions, debugOptions, isSSR = false) {
     let getter;
     let setter;
-    if (isFunction$3(getterOrOptions)) {
+    if (isFunction$2(getterOrOptions)) {
       getter = getterOrOptions;
     } else {
       getter = getterOrOptions.get;
@@ -2427,7 +2427,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     } else if (isReactive(source)) {
       getter = () => reactiveGetter(source);
       forceTrigger = true;
-    } else if (isArray$2(source)) {
+    } else if (isArray$1(source)) {
       isMultiSource = true;
       forceTrigger = source.some((s2) => isReactive(s2) || isShallow(s2));
       getter = () => source.map((s2) => {
@@ -2435,13 +2435,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           return s2.value;
         } else if (isReactive(s2)) {
           return reactiveGetter(s2);
-        } else if (isFunction$3(s2)) {
+        } else if (isFunction$2(s2)) {
           return call ? call(s2, 2) : s2();
         } else {
           warnInvalidSource(s2);
         }
       });
-    } else if (isFunction$3(source)) {
+    } else if (isFunction$2(source)) {
       if (cb) {
         getter = call ? () => call(source, 2) : source;
       } else {
@@ -2464,7 +2464,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         };
       }
     } else {
-      getter = NOOP$1;
+      getter = NOOP;
       warnInvalidSource(source);
     }
     if (cb && deep) {
@@ -2557,7 +2557,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     return watchHandle;
   }
   function traverse(value, depth = Infinity, seen) {
-    if (depth <= 0 || !isObject$2(value) || value["__v_skip"]) {
+    if (depth <= 0 || !isObject$1(value) || value["__v_skip"]) {
       return value;
     }
     seen = seen || /* @__PURE__ */ new Set();
@@ -2568,7 +2568,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     depth--;
     if (isRef(value)) {
       traverse(value.value, depth, seen);
-    } else if (isArray$2(value)) {
+    } else if (isArray$1(value)) {
       for (let i = 0; i < value.length; i++) {
         traverse(value[i], depth, seen);
       }
@@ -2576,7 +2576,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       value.forEach((v2) => {
         traverse(v2, depth, seen);
       });
-    } else if (isPlainObject$2(value)) {
+    } else if (isPlainObject$1(value)) {
       for (const key in value) {
         traverse(value[key], depth, seen);
       }
@@ -2690,7 +2690,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     return res;
   }
   function formatProp(key, value, raw) {
-    if (isString$2(value)) {
+    if (isString$1(value)) {
       value = JSON.stringify(value);
       return raw ? value : [`${key}=${value}`];
     } else if (typeof value === "number" || typeof value === "boolean" || value == null) {
@@ -2698,7 +2698,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     } else if (isRef(value)) {
       value = formatProp(key, toRaw(value.value), true);
       return raw ? value : [`${key}=Ref<`, value, `>`];
-    } else if (isFunction$3(value)) {
+    } else if (isFunction$2(value)) {
       return [`${key}=fn${value.name ? `<${value.name}>` : ``}`];
     } else {
       value = toRaw(value);
@@ -2755,16 +2755,16 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     }
   }
   function callWithAsyncErrorHandling(fn2, instance, type, args) {
-    if (isFunction$3(fn2)) {
+    if (isFunction$2(fn2)) {
       const res = callWithErrorHandling(fn2, instance, type, args);
-      if (res && isPromise$1(res)) {
+      if (res && isPromise(res)) {
         res.catch((err) => {
           handleError(err, instance, type);
         });
       }
       return res;
     }
-    if (isArray$2(fn2)) {
+    if (isArray$1(fn2)) {
       const values = [];
       for (let i = 0; i < fn2.length; i++) {
         values.push(callWithAsyncErrorHandling(fn2[i], instance, type, args));
@@ -2871,7 +2871,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     }
   }
   function queuePostFlushCb(cb) {
-    if (!isArray$2(cb)) {
+    if (!isArray$1(cb)) {
       if (activePostFlushCbs && cb.id === -1) {
         activePostFlushCbs.splice(postFlushIndex + 1, 0, cb);
       } else if (!(cb.flags & 1)) {
@@ -3272,7 +3272,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     for (let i = 0; i < directives.length; i++) {
       let [dir, value, arg, modifiers = EMPTY_OBJ] = directives[i];
       if (dir) {
-        if (isFunction$3(dir)) {
+        if (isFunction$2(dir)) {
           dir = {
             mounted: dir,
             updated: dir
@@ -3322,7 +3322,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   const isTargetMathML = (target) => typeof MathMLElement === "function" && target instanceof MathMLElement;
   const resolveTarget = (props2, select) => {
     const targetSelector = props2 && props2.to;
-    if (isString$2(targetSelector)) {
+    if (isString$1(targetSelector)) {
       if (!select) {
         warn$1(
           `Current renderer does not support string target for Teleports. (missing querySelector renderer option)`
@@ -3847,7 +3847,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     const callAsyncHook = (hook, args) => {
       const done = args[1];
       callHook2(hook, args);
-      if (isArray$2(hook)) {
+      if (isArray$1(hook)) {
         if (hook.every((hook2) => hook2.length <= 1)) done();
       } else if (hook.length <= 1) {
         done();
@@ -3980,7 +3980,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       if (shapeFlag & 16) {
         return children[0];
       }
-      if (shapeFlag & 32 && isFunction$3(children.default)) {
+      if (shapeFlag & 32 && isFunction$2(children.default)) {
         return children.default();
       }
     }
@@ -4021,7 +4021,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   /*! #__NO_SIDE_EFFECTS__ */
   // @__NO_SIDE_EFFECTS__
   function defineComponent(options, extraOptions) {
-    return isFunction$3(options) ? (
+    return isFunction$2(options) ? (
       // #8236: extend call and options.name access are considered side-effects
       // by Rollup, so we have to wrap it in a pure-annotated IIFE.
       /* @__PURE__ */ (() => extend({ name: options.name }, extraOptions, { setup: options }))()
@@ -4032,11 +4032,11 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   }
   const knownTemplateRefs = /* @__PURE__ */ new WeakSet();
   function setRef(rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) {
-    if (isArray$2(rawRef)) {
+    if (isArray$1(rawRef)) {
       rawRef.forEach(
         (r, i) => setRef(
           r,
-          oldRawRef && (isArray$2(oldRawRef) ? oldRawRef[i] : oldRawRef),
+          oldRawRef && (isArray$1(oldRawRef) ? oldRawRef[i] : oldRawRef),
           parentSuspense,
           vnode,
           isUnmount
@@ -4065,7 +4065,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     const rawSetupState = toRaw(setupState);
     const canSetSetupRef = setupState === EMPTY_OBJ ? () => false : (key) => {
       {
-        if (hasOwn$1(rawSetupState, key) && !isRef(rawSetupState[key])) {
+        if (hasOwn(rawSetupState, key) && !isRef(rawSetupState[key])) {
           warn$1(
             `Template ref "${key}" used on a non-ref value. It will not work in the production build.`
           );
@@ -4074,10 +4074,10 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           return false;
         }
       }
-      return hasOwn$1(rawSetupState, key);
+      return hasOwn(rawSetupState, key);
     };
     if (oldRef != null && oldRef !== ref3) {
-      if (isString$2(oldRef)) {
+      if (isString$1(oldRef)) {
         refs[oldRef] = null;
         if (canSetSetupRef(oldRef)) {
           setupState[oldRef] = null;
@@ -4086,19 +4086,19 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         oldRef.value = null;
       }
     }
-    if (isFunction$3(ref3)) {
+    if (isFunction$2(ref3)) {
       callWithErrorHandling(ref3, owner, 12, [value, refs]);
     } else {
-      const _isString = isString$2(ref3);
+      const _isString = isString$1(ref3);
       const _isRef = isRef(ref3);
       if (_isString || _isRef) {
         const doSet = () => {
           if (rawRef.f) {
             const existing = _isString ? canSetSetupRef(ref3) ? setupState[ref3] : refs[ref3] : ref3.value;
             if (isUnmount) {
-              isArray$2(existing) && remove(existing, refValue);
+              isArray$1(existing) && remove(existing, refValue);
             } else {
-              if (!isArray$2(existing)) {
+              if (!isArray$1(existing)) {
                 if (_isString) {
                   refs[ref3] = [refValue];
                   if (canSetSetupRef(ref3)) {
@@ -4233,7 +4233,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   }
   const NULL_DYNAMIC_COMPONENT = Symbol.for("v-ndc");
   function resolveDynamicComponent(component2) {
-    if (isString$2(component2)) {
+    if (isString$1(component2)) {
       return resolveAsset(COMPONENTS, component2, false) || component2;
     } else {
       return component2 || NULL_DYNAMIC_COMPONENT;
@@ -4251,7 +4251,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           Component,
           false
         );
-        if (selfName && (selfName === name || selfName === camelize$1(name) || selfName === capitalize$2(camelize$1(name)))) {
+        if (selfName && (selfName === name || selfName === camelize(name) || selfName === capitalize$1(camelize(name)))) {
           return Component;
         }
       }
@@ -4272,18 +4272,18 @@ If this is a native custom element, make sure to exclude it from component resol
       return res;
     } else {
       warn$1(
-        `resolve${capitalize$2(type.slice(0, -1))} can only be used in render() or setup().`
+        `resolve${capitalize$1(type.slice(0, -1))} can only be used in render() or setup().`
       );
     }
   }
   function resolve(registry, name) {
-    return registry && (registry[name] || registry[camelize$1(name)] || registry[capitalize$2(camelize$1(name))]);
+    return registry && (registry[name] || registry[camelize(name)] || registry[capitalize$1(camelize(name))]);
   }
   function renderList(source, renderItem, cache2, index) {
     let ret;
     const cached = cache2;
-    const sourceIsArray = isArray$2(source);
-    if (sourceIsArray || isString$2(source)) {
+    const sourceIsArray = isArray$1(source);
+    if (sourceIsArray || isString$1(source)) {
       const sourceIsReactiveArray = sourceIsArray && isReactive(source);
       let needsWrap = false;
       let isReadonlySource = false;
@@ -4309,7 +4309,7 @@ If this is a native custom element, make sure to exclude it from component resol
       for (let i = 0; i < source; i++) {
         ret[i] = renderItem(i + 1, i, void 0, cached);
       }
-    } else if (isObject$2(source)) {
+    } else if (isObject$1(source)) {
       if (source[Symbol.iterator]) {
         ret = Array.from(
           source,
@@ -4331,7 +4331,7 @@ If this is a native custom element, make sure to exclude it from component resol
   function createSlots(slots, dynamicSlots) {
     for (let i = 0; i < dynamicSlots.length; i++) {
       const slot = dynamicSlots[i];
-      if (isArray$2(slot)) {
+      if (isArray$1(slot)) {
         for (let j = 0; j < slot.length; j++) {
           slots[slot[j].name] = slot[j].fn;
         }
@@ -4398,7 +4398,7 @@ If this is a native custom element, make sure to exclude it from component resol
   }
   function toHandlers(obj, preserveCaseIfNecessary) {
     const ret = {};
-    if (!isObject$2(obj)) {
+    if (!isObject$1(obj)) {
       warn$1(`v-on with no argument expects an object value.`);
       return ret;
     }
@@ -4436,7 +4436,7 @@ If this is a native custom element, make sure to exclude it from component resol
     })
   );
   const isReservedPrefix = (key) => key === "_" || key === "$";
-  const hasSetupBinding = (state, key) => state !== EMPTY_OBJ && !state.__isScriptSetup && hasOwn$1(state, key);
+  const hasSetupBinding = (state, key) => state !== EMPTY_OBJ && !state.__isScriptSetup && hasOwn(state, key);
   const PublicInstanceProxyHandlers = {
     get({ _: instance }, key) {
       if (key === "__v_skip") {
@@ -4463,17 +4463,17 @@ If this is a native custom element, make sure to exclude it from component resol
         } else if (hasSetupBinding(setupState, key)) {
           accessCache[key] = 1;
           return setupState[key];
-        } else if (data !== EMPTY_OBJ && hasOwn$1(data, key)) {
+        } else if (data !== EMPTY_OBJ && hasOwn(data, key)) {
           accessCache[key] = 2;
           return data[key];
         } else if (
           // only cache other properties when instance has declared (thus stable)
           // props
-          (normalizedProps = instance.propsOptions[0]) && hasOwn$1(normalizedProps, key)
+          (normalizedProps = instance.propsOptions[0]) && hasOwn(normalizedProps, key)
         ) {
           accessCache[key] = 3;
           return props2[key];
-        } else if (ctx !== EMPTY_OBJ && hasOwn$1(ctx, key)) {
+        } else if (ctx !== EMPTY_OBJ && hasOwn(ctx, key)) {
           accessCache[key] = 4;
           return ctx[key];
         } else if (shouldCacheAccess) {
@@ -4495,20 +4495,20 @@ If this is a native custom element, make sure to exclude it from component resol
         (cssModule = type.__cssModules) && (cssModule = cssModule[key])
       ) {
         return cssModule;
-      } else if (ctx !== EMPTY_OBJ && hasOwn$1(ctx, key)) {
+      } else if (ctx !== EMPTY_OBJ && hasOwn(ctx, key)) {
         accessCache[key] = 4;
         return ctx[key];
       } else if (
         // global properties
-        globalProperties = appContext.config.globalProperties, hasOwn$1(globalProperties, key)
+        globalProperties = appContext.config.globalProperties, hasOwn(globalProperties, key)
       ) {
         {
           return globalProperties[key];
         }
-      } else if (currentRenderingInstance && (!isString$2(key) || // #1091 avoid internal isRef/isVNode checks on component instance leading
+      } else if (currentRenderingInstance && (!isString$1(key) || // #1091 avoid internal isRef/isVNode checks on component instance leading
       // to infinite warning loop
       key.indexOf("__v") !== 0)) {
-        if (data !== EMPTY_OBJ && isReservedPrefix(key[0]) && hasOwn$1(data, key)) {
+        if (data !== EMPTY_OBJ && isReservedPrefix(key[0]) && hasOwn(data, key)) {
           warn$1(
             `Property ${JSON.stringify(
               key
@@ -4526,13 +4526,13 @@ If this is a native custom element, make sure to exclude it from component resol
       if (hasSetupBinding(setupState, key)) {
         setupState[key] = value;
         return true;
-      } else if (setupState.__isScriptSetup && hasOwn$1(setupState, key)) {
+      } else if (setupState.__isScriptSetup && hasOwn(setupState, key)) {
         warn$1(`Cannot mutate <script setup> binding "${key}" from Options API.`);
         return false;
-      } else if (data !== EMPTY_OBJ && hasOwn$1(data, key)) {
+      } else if (data !== EMPTY_OBJ && hasOwn(data, key)) {
         data[key] = value;
         return true;
-      } else if (hasOwn$1(instance.props, key)) {
+      } else if (hasOwn(instance.props, key)) {
         warn$1(`Attempting to mutate prop "${key}". Props are readonly.`);
         return false;
       }
@@ -4558,12 +4558,12 @@ If this is a native custom element, make sure to exclude it from component resol
       _: { data, setupState, accessCache, ctx, appContext, propsOptions }
     }, key) {
       let normalizedProps;
-      return !!accessCache[key] || data !== EMPTY_OBJ && hasOwn$1(data, key) || hasSetupBinding(setupState, key) || (normalizedProps = propsOptions[0]) && hasOwn$1(normalizedProps, key) || hasOwn$1(ctx, key) || hasOwn$1(publicPropertiesMap, key) || hasOwn$1(appContext.config.globalProperties, key);
+      return !!accessCache[key] || data !== EMPTY_OBJ && hasOwn(data, key) || hasSetupBinding(setupState, key) || (normalizedProps = propsOptions[0]) && hasOwn(normalizedProps, key) || hasOwn(ctx, key) || hasOwn(publicPropertiesMap, key) || hasOwn(appContext.config.globalProperties, key);
     },
     defineProperty(target, key, descriptor) {
       if (descriptor.get != null) {
         target._.accessCache[key] = 0;
-      } else if (hasOwn$1(descriptor, "value")) {
+      } else if (hasOwn(descriptor, "value")) {
         this.set(target, key, descriptor.value, null);
       }
       return Reflect.defineProperty(target, key, descriptor);
@@ -4591,7 +4591,7 @@ If this is a native custom element, make sure to exclude it from component resol
         get: () => publicPropertiesMap[key](instance),
         // intercepted by the proxy so no need for implementation,
         // but needed to prevent set errors
-        set: NOOP$1
+        set: NOOP
       });
     });
     return target;
@@ -4607,7 +4607,7 @@ If this is a native custom element, make sure to exclude it from component resol
           enumerable: true,
           configurable: true,
           get: () => instance.props[key],
-          set: NOOP$1
+          set: NOOP
         });
       });
     }
@@ -4628,7 +4628,7 @@ If this is a native custom element, make sure to exclude it from component resol
           enumerable: true,
           configurable: true,
           get: () => setupState[key],
-          set: NOOP$1
+          set: NOOP
         });
       }
     });
@@ -4647,7 +4647,7 @@ If this is a native custom element, make sure to exclude it from component resol
     return i.setupContext || (i.setupContext = createSetupContext(i));
   }
   function normalizePropsOrEmits(props2) {
-    return isArray$2(props2) ? props2.reduce(
+    return isArray$1(props2) ? props2.reduce(
       (normalized, p2) => (normalized[p2] = null, normalized),
       {}
     ) : props2;
@@ -4719,7 +4719,7 @@ If this is a native custom element, make sure to exclude it from component resol
     if (methods) {
       for (const key in methods) {
         const methodHandler = methods[key];
-        if (isFunction$3(methodHandler)) {
+        if (isFunction$2(methodHandler)) {
           {
             Object.defineProperty(ctx, key, {
               value: methodHandler.bind(publicThis),
@@ -4739,18 +4739,18 @@ If this is a native custom element, make sure to exclude it from component resol
       }
     }
     if (dataOptions) {
-      if (!isFunction$3(dataOptions)) {
+      if (!isFunction$2(dataOptions)) {
         warn$1(
           `The data option must be a function. Plain object usage is no longer supported.`
         );
       }
       const data = dataOptions.call(publicThis, publicThis);
-      if (isPromise$1(data)) {
+      if (isPromise(data)) {
         warn$1(
           `data() returned a Promise - note data() cannot be async; If you intend to perform data fetching before component renders, use async setup() + <Suspense>.`
         );
       }
-      if (!isObject$2(data)) {
+      if (!isObject$1(data)) {
         warn$1(`data() should return an object.`);
       } else {
         instance.data = reactive(data);
@@ -4762,7 +4762,7 @@ If this is a native custom element, make sure to exclude it from component resol
                 configurable: true,
                 enumerable: true,
                 get: () => data[key],
-                set: NOOP$1
+                set: NOOP
               });
             }
           }
@@ -4773,11 +4773,11 @@ If this is a native custom element, make sure to exclude it from component resol
     if (computedOptions) {
       for (const key in computedOptions) {
         const opt = computedOptions[key];
-        const get2 = isFunction$3(opt) ? opt.bind(publicThis, publicThis) : isFunction$3(opt.get) ? opt.get.bind(publicThis, publicThis) : NOOP$1;
-        if (get2 === NOOP$1) {
+        const get2 = isFunction$2(opt) ? opt.bind(publicThis, publicThis) : isFunction$2(opt.get) ? opt.get.bind(publicThis, publicThis) : NOOP;
+        if (get2 === NOOP) {
           warn$1(`Computed property "${key}" has no getter.`);
         }
-        const set2 = !isFunction$3(opt) && isFunction$3(opt.set) ? opt.set.bind(publicThis) : () => {
+        const set2 = !isFunction$2(opt) && isFunction$2(opt.set) ? opt.set.bind(publicThis) : () => {
           warn$1(
             `Write operation failed: computed property "${key}" is readonly.`
           );
@@ -4803,7 +4803,7 @@ If this is a native custom element, make sure to exclude it from component resol
       }
     }
     if (provideOptions) {
-      const provides = isFunction$3(provideOptions) ? provideOptions.call(publicThis) : provideOptions;
+      const provides = isFunction$2(provideOptions) ? provideOptions.call(publicThis) : provideOptions;
       Reflect.ownKeys(provides).forEach((key) => {
         provide(key, provides[key]);
       });
@@ -4812,7 +4812,7 @@ If this is a native custom element, make sure to exclude it from component resol
       callHook$1(created, instance, "c");
     }
     function registerLifecycleHook(register, hook) {
-      if (isArray$2(hook)) {
+      if (isArray$1(hook)) {
         hook.forEach((_hook) => register(_hook.bind(publicThis)));
       } else if (hook) {
         register(hook.bind(publicThis));
@@ -4830,7 +4830,7 @@ If this is a native custom element, make sure to exclude it from component resol
     registerLifecycleHook(onBeforeUnmount, beforeUnmount);
     registerLifecycleHook(onUnmounted, unmounted);
     registerLifecycleHook(onServerPrefetch, serverPrefetch);
-    if (isArray$2(expose)) {
+    if (isArray$1(expose)) {
       if (expose.length) {
         const exposed = instance.exposed || (instance.exposed = {});
         expose.forEach((key) => {
@@ -4844,7 +4844,7 @@ If this is a native custom element, make sure to exclude it from component resol
         instance.exposed = {};
       }
     }
-    if (render2 && instance.render === NOOP$1) {
+    if (render2 && instance.render === NOOP) {
       instance.render = render2;
     }
     if (inheritAttrs != null) {
@@ -4856,14 +4856,14 @@ If this is a native custom element, make sure to exclude it from component resol
       markAsyncBoundary(instance);
     }
   }
-  function resolveInjections(injectOptions, ctx, checkDuplicateProperties = NOOP$1) {
-    if (isArray$2(injectOptions)) {
+  function resolveInjections(injectOptions, ctx, checkDuplicateProperties = NOOP) {
+    if (isArray$1(injectOptions)) {
       injectOptions = normalizeInject(injectOptions);
     }
     for (const key in injectOptions) {
       const opt = injectOptions[key];
       let injected;
-      if (isObject$2(opt)) {
+      if (isObject$1(opt)) {
         if ("default" in opt) {
           injected = inject(
             opt.from || key,
@@ -4893,32 +4893,32 @@ If this is a native custom element, make sure to exclude it from component resol
   }
   function callHook$1(hook, instance, type) {
     callWithAsyncErrorHandling(
-      isArray$2(hook) ? hook.map((h2) => h2.bind(instance.proxy)) : hook.bind(instance.proxy),
+      isArray$1(hook) ? hook.map((h2) => h2.bind(instance.proxy)) : hook.bind(instance.proxy),
       instance,
       type
     );
   }
   function createWatcher(raw, ctx, publicThis, key) {
     let getter = key.includes(".") ? createPathGetter(publicThis, key) : () => publicThis[key];
-    if (isString$2(raw)) {
+    if (isString$1(raw)) {
       const handler = ctx[raw];
-      if (isFunction$3(handler)) {
+      if (isFunction$2(handler)) {
         {
           watch(getter, handler);
         }
       } else {
         warn$1(`Invalid watch handler specified by key "${raw}"`, handler);
       }
-    } else if (isFunction$3(raw)) {
+    } else if (isFunction$2(raw)) {
       {
         watch(getter, raw.bind(publicThis));
       }
-    } else if (isObject$2(raw)) {
-      if (isArray$2(raw)) {
+    } else if (isObject$1(raw)) {
+      if (isArray$1(raw)) {
         raw.forEach((r) => createWatcher(r, ctx, publicThis, key));
       } else {
-        const handler = isFunction$3(raw.handler) ? raw.handler.bind(publicThis) : ctx[raw.handler];
-        if (isFunction$3(handler)) {
+        const handler = isFunction$2(raw.handler) ? raw.handler.bind(publicThis) : ctx[raw.handler];
+        if (isFunction$2(handler)) {
           watch(getter, handler, raw);
         } else {
           warn$1(`Invalid watch handler specified by key "${raw.handler}"`, handler);
@@ -4953,7 +4953,7 @@ If this is a native custom element, make sure to exclude it from component resol
       }
       mergeOptions$1(resolved, base, optionMergeStrategies);
     }
-    if (isObject$2(base)) {
+    if (isObject$1(base)) {
       cache2.set(base, resolved);
     }
     return resolved;
@@ -5020,8 +5020,8 @@ If this is a native custom element, make sure to exclude it from component resol
     }
     return function mergedDataFn() {
       return extend(
-        isFunction$3(to) ? to.call(this, this) : to,
-        isFunction$3(from) ? from.call(this, this) : from
+        isFunction$2(to) ? to.call(this, this) : to,
+        isFunction$2(from) ? from.call(this, this) : from
       );
     };
   }
@@ -5029,7 +5029,7 @@ If this is a native custom element, make sure to exclude it from component resol
     return mergeObjectOptions(normalizeInject(to), normalizeInject(from));
   }
   function normalizeInject(raw) {
-    if (isArray$2(raw)) {
+    if (isArray$1(raw)) {
       const res = {};
       for (let i = 0; i < raw.length; i++) {
         res[raw[i]] = raw[i];
@@ -5046,7 +5046,7 @@ If this is a native custom element, make sure to exclude it from component resol
   }
   function mergeEmitsOrPropsOptions(to, from) {
     if (to) {
-      if (isArray$2(to) && isArray$2(from)) {
+      if (isArray$1(to) && isArray$1(from)) {
         return [.../* @__PURE__ */ new Set([...to, ...from])];
       }
       return extend(
@@ -5091,10 +5091,10 @@ If this is a native custom element, make sure to exclude it from component resol
   let uid$1 = 0;
   function createAppAPI(render2, hydrate) {
     return function createApp2(rootComponent, rootProps = null) {
-      if (!isFunction$3(rootComponent)) {
+      if (!isFunction$2(rootComponent)) {
         rootComponent = extend({}, rootComponent);
       }
-      if (rootProps != null && !isObject$2(rootProps)) {
+      if (rootProps != null && !isObject$1(rootProps)) {
         warn$1(`root props passed to app.mount() must be an object.`);
         rootProps = null;
       }
@@ -5123,10 +5123,10 @@ If this is a native custom element, make sure to exclude it from component resol
         use(plugin, ...options) {
           if (installedPlugins.has(plugin)) {
             warn$1(`Plugin has already been applied to target app.`);
-          } else if (plugin && isFunction$3(plugin.install)) {
+          } else if (plugin && isFunction$2(plugin.install)) {
             installedPlugins.add(plugin);
             plugin.install(app, ...options);
-          } else if (isFunction$3(plugin)) {
+          } else if (isFunction$2(plugin)) {
             installedPlugins.add(plugin);
             plugin(app, ...options);
           } else {
@@ -5241,7 +5241,7 @@ If you want to remount the same app, move your app creation logic into a factory
         },
         provide(key, value) {
           if (key in context.provides) {
-            if (hasOwn$1(context.provides, key)) {
+            if (hasOwn(context.provides, key)) {
               warn$1(
                 `App already provides property with key "${String(key)}". It will be overwritten with the new value.`
               );
@@ -5289,7 +5289,7 @@ If you want to remount the same app, move your app creation logic into a factory
       if (provides && key in provides) {
         return provides[key];
       } else if (arguments.length > 1) {
-        return treatDefaultAsFactory && isFunction$3(defaultValue) ? defaultValue.call(instance && instance.proxy) : defaultValue;
+        return treatDefaultAsFactory && isFunction$2(defaultValue) ? defaultValue.call(instance && instance.proxy) : defaultValue;
       } else {
         warn$1(`injection "${String(key)}" not found.`);
       }
@@ -5354,13 +5354,13 @@ If you want to remount the same app, move your app creation logic into a factory
           }
           const value = rawProps[key];
           if (options) {
-            if (hasOwn$1(attrs, key)) {
+            if (hasOwn(attrs, key)) {
               if (value !== attrs[key]) {
                 attrs[key] = value;
                 hasAttrsChanged = true;
               }
             } else {
-              const camelizedKey = camelize$1(key);
+              const camelizedKey = camelize(key);
               props2[camelizedKey] = resolvePropValue(
                 options,
                 rawCurrentProps,
@@ -5385,9 +5385,9 @@ If you want to remount the same app, move your app creation logic into a factory
       let kebabKey;
       for (const key in rawCurrentProps) {
         if (!rawProps || // for camelCase
-        !hasOwn$1(rawProps, key) && // it's possible the original props was passed in as kebab-case
+        !hasOwn(rawProps, key) && // it's possible the original props was passed in as kebab-case
         // and converted to camelCase (#955)
-        ((kebabKey = hyphenate$1(key)) === key || !hasOwn$1(rawProps, kebabKey))) {
+        ((kebabKey = hyphenate(key)) === key || !hasOwn(rawProps, kebabKey))) {
           if (options) {
             if (rawPrevProps && // for camelCase
             (rawPrevProps[key] !== void 0 || // for kebab-case
@@ -5408,7 +5408,7 @@ If you want to remount the same app, move your app creation logic into a factory
       }
       if (attrs !== rawCurrentProps) {
         for (const key in attrs) {
-          if (!rawProps || !hasOwn$1(rawProps, key) && true) {
+          if (!rawProps || !hasOwn(rawProps, key) && true) {
             delete attrs[key];
             hasAttrsChanged = true;
           }
@@ -5433,7 +5433,7 @@ If you want to remount the same app, move your app creation logic into a factory
         }
         const value = rawProps[key];
         let camelKey;
-        if (options && hasOwn$1(options, camelKey = camelize$1(key))) {
+        if (options && hasOwn(options, camelKey = camelize(key))) {
           if (!needCastKeys || !needCastKeys.includes(camelKey)) {
             props2[camelKey] = value;
           } else {
@@ -5458,7 +5458,7 @@ If you want to remount the same app, move your app creation logic into a factory
           key,
           castValues[key],
           instance,
-          !hasOwn$1(castValues, key)
+          !hasOwn(castValues, key)
         );
       }
     }
@@ -5467,10 +5467,10 @@ If you want to remount the same app, move your app creation logic into a factory
   function resolvePropValue(options, props2, key, value, instance, isAbsent2) {
     const opt = options[key];
     if (opt != null) {
-      const hasDefault = hasOwn$1(opt, "default");
+      const hasDefault = hasOwn(opt, "default");
       if (hasDefault && value === void 0) {
         const defaultValue = opt.default;
-        if (opt.type !== Function && !opt.skipFactory && isFunction$3(defaultValue)) {
+        if (opt.type !== Function && !opt.skipFactory && isFunction$2(defaultValue)) {
           const { propsDefaults } = instance;
           if (key in propsDefaults) {
             value = propsDefaults[key];
@@ -5498,7 +5498,7 @@ If you want to remount the same app, move your app creation logic into a factory
         } else if (opt[
           1
           /* shouldCastTrue */
-        ] && (value === "" || value === hyphenate$1(key))) {
+        ] && (value === "" || value === hyphenate(key))) {
           value = true;
         }
       }
@@ -5516,7 +5516,7 @@ If you want to remount the same app, move your app creation logic into a factory
     const normalized = {};
     const needCastKeys = [];
     let hasExtends = false;
-    if (!isFunction$3(comp)) {
+    if (!isFunction$2(comp)) {
       const extendProps = (raw2) => {
         hasExtends = true;
         const [props2, keys2] = normalizePropsOptions(raw2, appContext, true);
@@ -5534,37 +5534,37 @@ If you want to remount the same app, move your app creation logic into a factory
       }
     }
     if (!raw && !hasExtends) {
-      if (isObject$2(comp)) {
+      if (isObject$1(comp)) {
         cache2.set(comp, EMPTY_ARR);
       }
       return EMPTY_ARR;
     }
-    if (isArray$2(raw)) {
+    if (isArray$1(raw)) {
       for (let i = 0; i < raw.length; i++) {
-        if (!isString$2(raw[i])) {
+        if (!isString$1(raw[i])) {
           warn$1(`props must be strings when using array syntax.`, raw[i]);
         }
-        const normalizedKey = camelize$1(raw[i]);
+        const normalizedKey = camelize(raw[i]);
         if (validatePropName(normalizedKey)) {
           normalized[normalizedKey] = EMPTY_OBJ;
         }
       }
     } else if (raw) {
-      if (!isObject$2(raw)) {
+      if (!isObject$1(raw)) {
         warn$1(`invalid props options`, raw);
       }
       for (const key in raw) {
-        const normalizedKey = camelize$1(key);
+        const normalizedKey = camelize(key);
         if (validatePropName(normalizedKey)) {
           const opt = raw[key];
-          const prop = normalized[normalizedKey] = isArray$2(opt) || isFunction$3(opt) ? { type: opt } : extend({}, opt);
+          const prop = normalized[normalizedKey] = isArray$1(opt) || isFunction$2(opt) ? { type: opt } : extend({}, opt);
           const propType = prop.type;
           let shouldCast = false;
           let shouldCastTrue = true;
-          if (isArray$2(propType)) {
+          if (isArray$1(propType)) {
             for (let index = 0; index < propType.length; ++index) {
               const type = propType[index];
-              const typeName = isFunction$3(type) && type.name;
+              const typeName = isFunction$2(type) && type.name;
               if (typeName === "Boolean") {
                 shouldCast = true;
                 break;
@@ -5573,7 +5573,7 @@ If you want to remount the same app, move your app creation logic into a factory
               }
             }
           } else {
-            shouldCast = isFunction$3(propType) && propType.name === "Boolean";
+            shouldCast = isFunction$2(propType) && propType.name === "Boolean";
           }
           prop[
             0
@@ -5583,14 +5583,14 @@ If you want to remount the same app, move your app creation logic into a factory
             1
             /* shouldCastTrue */
           ] = shouldCastTrue;
-          if (shouldCast || hasOwn$1(prop, "default")) {
+          if (shouldCast || hasOwn(prop, "default")) {
             needCastKeys.push(normalizedKey);
           }
         }
       }
     }
     const res = [normalized, needCastKeys];
-    if (isObject$2(comp)) {
+    if (isObject$1(comp)) {
       cache2.set(comp, res);
     }
     return res;
@@ -5618,7 +5618,7 @@ If you want to remount the same app, move your app creation logic into a factory
   function validateProps(rawProps, props2, instance) {
     const resolvedValues = toRaw(props2);
     const options = instance.propsOptions[0];
-    const camelizePropsKey = Object.keys(rawProps).map((key) => camelize$1(key));
+    const camelizePropsKey = Object.keys(rawProps).map((key) => camelize(key));
     for (const key in options) {
       let opt = options[key];
       if (opt == null) continue;
@@ -5642,7 +5642,7 @@ If you want to remount the same app, move your app creation logic into a factory
     }
     if (type != null && type !== true && !skipCheck) {
       let isValid = false;
-      const types2 = isArray$2(type) ? type : [type];
+      const types2 = isArray$1(type) ? type : [type];
       const expectedTypes = [];
       for (let i = 0; i < types2.length && !isValid; i++) {
         const { valid, expectedType } = assertType(value, types2[i]);
@@ -5673,9 +5673,9 @@ If you want to remount the same app, move your app creation logic into a factory
         valid = value instanceof type;
       }
     } else if (expectedType === "Object") {
-      valid = isObject$2(value);
+      valid = isObject$1(value);
     } else if (expectedType === "Array") {
-      valid = isArray$2(value);
+      valid = isArray$1(value);
     } else {
       valid = value instanceof type;
     }
@@ -5688,7 +5688,7 @@ If you want to remount the same app, move your app creation logic into a factory
     if (expectedTypes.length === 0) {
       return `Prop type [] for prop "${name}" won't match anything. Did you mean to use type Array instead?`;
     }
-    let message2 = `Invalid prop: type check failed for prop "${name}". Expected ${expectedTypes.map(capitalize$2).join(" | ")}`;
+    let message2 = `Invalid prop: type check failed for prop "${name}". Expected ${expectedTypes.map(capitalize$1).join(" | ")}`;
     const expectedType = expectedTypes[0];
     const receivedType = toRawType(value);
     const expectedValue = styleValue(value, expectedType);
@@ -5719,7 +5719,7 @@ If you want to remount the same app, move your app creation logic into a factory
     return args.some((elem) => elem.toLowerCase() === "boolean");
   }
   const isInternalKey = (key) => key === "_" || key === "__" || key === "_ctx" || key === "$stable";
-  const normalizeSlotValue = (value) => isArray$2(value) ? value.map(normalizeVNode) : [normalizeVNode(value)];
+  const normalizeSlotValue = (value) => isArray$1(value) ? value.map(normalizeVNode) : [normalizeVNode(value)];
   const normalizeSlot = (key, rawSlot, ctx) => {
     if (rawSlot._n) {
       return rawSlot;
@@ -5740,7 +5740,7 @@ If you want to remount the same app, move your app creation logic into a factory
     for (const key in rawSlots) {
       if (isInternalKey(key)) continue;
       const value = rawSlots[key];
-      if (isFunction$3(value)) {
+      if (isFunction$2(value)) {
         slots[key] = normalizeSlot(key, value, ctx);
       } else if (value != null) {
         {
@@ -5893,7 +5893,7 @@ For more details, see https://link.vuejs.org/feature-flags.`
       setElementText: hostSetElementText,
       parentNode: hostParentNode,
       nextSibling: hostNextSibling,
-      setScopeId: hostSetScopeId = NOOP$1,
+      setScopeId: hostSetScopeId = NOOP,
       insertStaticContent: hostInsertStaticContent
     } = options;
     const patch = (n1, n2, container, anchor = null, parentComponent = null, parentSuspense = null, namespace = void 0, slotScopeIds = null, optimized = isHmrUpdating ? false : !!n2.dynamicChildren) => {
@@ -7169,7 +7169,7 @@ For more details, see https://link.vuejs.org/feature-flags.`
       if (bum) {
         invokeArrayFns(bum);
       }
-      if (parent2 && isArray$2(slotCacheKeys)) {
+      if (parent2 && isArray$1(slotCacheKeys)) {
         slotCacheKeys.forEach((v2) => {
           parent2.renderCache[v2] = void 0;
         });
@@ -7273,7 +7273,7 @@ For more details, see https://link.vuejs.org/feature-flags.`
   function traverseStaticChildren(n1, n2, shallow = false) {
     const ch1 = n1.children;
     const ch2 = n2.children;
-    if (isArray$2(ch1) && isArray$2(ch2)) {
+    if (isArray$1(ch1) && isArray$1(ch2)) {
       for (let i = 0; i < ch1.length; i++) {
         const c1 = ch1[i];
         let c2 = ch2[i];
@@ -7369,7 +7369,7 @@ For more details, see https://link.vuejs.org/feature-flags.`
     return doWatch(effect2, null, options);
   }
   function watch(source, cb, options) {
-    if (!isFunction$3(cb)) {
+    if (!isFunction$2(cb)) {
       warn$1(
         `\`watch(fn, options?)\` signature has been moved to a separate API. Use \`watchEffect(fn, options?)\` instead. \`watch\` now only supports \`watch(source, cb, options?) signature.`
       );
@@ -7406,9 +7406,9 @@ For more details, see https://link.vuejs.org/feature-flags.`
       } else if (!runsImmediately) {
         const watchStopHandle = () => {
         };
-        watchStopHandle.stop = NOOP$1;
-        watchStopHandle.resume = NOOP$1;
-        watchStopHandle.pause = NOOP$1;
+        watchStopHandle.stop = NOOP;
+        watchStopHandle.resume = NOOP;
+        watchStopHandle.pause = NOOP;
         return watchStopHandle;
       }
     }
@@ -7453,9 +7453,9 @@ For more details, see https://link.vuejs.org/feature-flags.`
   }
   function instanceWatch(source, value, options) {
     const publicThis = this.proxy;
-    const getter = isString$2(source) ? source.includes(".") ? createPathGetter(publicThis, source) : () => publicThis[source] : source.bind(publicThis, publicThis);
+    const getter = isString$1(source) ? source.includes(".") ? createPathGetter(publicThis, source) : () => publicThis[source] : source.bind(publicThis, publicThis);
     let cb;
-    if (isFunction$3(value)) {
+    if (isFunction$2(value)) {
       cb = value;
     } else {
       cb = value.handler;
@@ -7477,7 +7477,7 @@ For more details, see https://link.vuejs.org/feature-flags.`
     };
   }
   const getModelModifiers = (props2, modelName) => {
-    return modelName === "modelValue" || modelName === "model-value" ? props2.modelModifiers : props2[`${modelName}Modifiers`] || props2[`${camelize$1(modelName)}Modifiers`] || props2[`${hyphenate$1(modelName)}Modifiers`];
+    return modelName === "modelValue" || modelName === "model-value" ? props2.modelModifiers : props2[`${modelName}Modifiers`] || props2[`${camelize(modelName)}Modifiers`] || props2[`${hyphenate(modelName)}Modifiers`];
   };
   function emit(instance, event, ...rawArgs) {
     if (instance.isUnmounted) return;
@@ -7489,14 +7489,14 @@ For more details, see https://link.vuejs.org/feature-flags.`
       } = instance;
       if (emitsOptions) {
         if (!(event in emitsOptions) && true) {
-          if (!propsOptions || !(toHandlerKey(camelize$1(event)) in propsOptions)) {
+          if (!propsOptions || !(toHandlerKey(camelize(event)) in propsOptions)) {
             warn$1(
-              `Component emitted event "${event}" but it is neither declared in the emits option nor as an "${toHandlerKey(camelize$1(event))}" prop.`
+              `Component emitted event "${event}" but it is neither declared in the emits option nor as an "${toHandlerKey(camelize(event))}" prop.`
             );
           }
         } else {
           const validator = emitsOptions[event];
-          if (isFunction$3(validator)) {
+          if (isFunction$2(validator)) {
             const isValid = validator(...rawArgs);
             if (!isValid) {
               warn$1(
@@ -7512,7 +7512,7 @@ For more details, see https://link.vuejs.org/feature-flags.`
     const modifiers = isModelListener2 && getModelModifiers(props2, event.slice(7));
     if (modifiers) {
       if (modifiers.trim) {
-        args = rawArgs.map((a2) => isString$2(a2) ? a2.trim() : a2);
+        args = rawArgs.map((a2) => isString$1(a2) ? a2.trim() : a2);
       }
       if (modifiers.number) {
         args = rawArgs.map(looseToNumber);
@@ -7528,7 +7528,7 @@ For more details, see https://link.vuejs.org/feature-flags.`
           `Event "${lowerCaseEvent}" is emitted in component ${formatComponentName(
             instance,
             instance.type
-          )} but the handler is registered for "${event}". Note that HTML attributes are case-insensitive and you cannot use v-on to listen to camelCase events when using in-DOM templates. You should probably use "${hyphenate$1(
+          )} but the handler is registered for "${event}". Note that HTML attributes are case-insensitive and you cannot use v-on to listen to camelCase events when using in-DOM templates. You should probably use "${hyphenate(
             event
           )}" instead of "${event}".`
         );
@@ -7536,9 +7536,9 @@ For more details, see https://link.vuejs.org/feature-flags.`
     }
     let handlerName;
     let handler = props2[handlerName = toHandlerKey(event)] || // also try camelCase event handler (#2249)
-    props2[handlerName = toHandlerKey(camelize$1(event))];
+    props2[handlerName = toHandlerKey(camelize(event))];
     if (!handler && isModelListener2) {
-      handler = props2[handlerName = toHandlerKey(hyphenate$1(event))];
+      handler = props2[handlerName = toHandlerKey(hyphenate(event))];
     }
     if (handler) {
       callWithAsyncErrorHandling(
@@ -7573,7 +7573,7 @@ For more details, see https://link.vuejs.org/feature-flags.`
     const raw = comp.emits;
     let normalized = {};
     let hasExtends = false;
-    if (!isFunction$3(comp)) {
+    if (!isFunction$2(comp)) {
       const extendEmits = (raw2) => {
         const normalizedFromExtend = normalizeEmitsOptions(raw2, appContext, true);
         if (normalizedFromExtend) {
@@ -7592,17 +7592,17 @@ For more details, see https://link.vuejs.org/feature-flags.`
       }
     }
     if (!raw && !hasExtends) {
-      if (isObject$2(comp)) {
+      if (isObject$1(comp)) {
         cache2.set(comp, null);
       }
       return null;
     }
-    if (isArray$2(raw)) {
+    if (isArray$1(raw)) {
       raw.forEach((key) => normalized[key] = null);
     } else {
       extend(normalized, raw);
     }
-    if (isObject$2(comp)) {
+    if (isObject$1(comp)) {
       cache2.set(comp, normalized);
     }
     return normalized;
@@ -7612,7 +7612,7 @@ For more details, see https://link.vuejs.org/feature-flags.`
       return false;
     }
     key = key.slice(2).replace(/Once$/, "");
-    return hasOwn$1(options, key[0].toLowerCase() + key.slice(1)) || hasOwn$1(options, hyphenate$1(key)) || hasOwn$1(options, key);
+    return hasOwn(options, key[0].toLowerCase() + key.slice(1)) || hasOwn(options, hyphenate(key)) || hasOwn(options, key);
   }
   let accessedAttrs = false;
   function markAttrsAccessed() {
@@ -7906,7 +7906,7 @@ For more details, see https://link.vuejs.org/feature-flags.`
   const isSuspense = (type) => type.__isSuspense;
   function queueEffectWithSuspense(fn2, suspense) {
     if (suspense && suspense.pendingBranch) {
-      if (isArray$2(fn2)) {
+      if (isArray$1(fn2)) {
         suspense.effects.push(...fn2);
       } else {
         suspense.effects.push(fn2);
@@ -7996,7 +7996,7 @@ For more details, see https://link.vuejs.org/feature-flags.`
     if (typeof ref3 === "number") {
       ref3 = "" + ref3;
     }
-    return ref3 != null ? isString$2(ref3) || isRef(ref3) || isFunction$3(ref3) ? { i: currentRenderingInstance, r: ref3, k: ref_key, f: !!ref_for } : ref3 : null;
+    return ref3 != null ? isString$1(ref3) || isRef(ref3) || isFunction$2(ref3) ? { i: currentRenderingInstance, r: ref3, k: ref_key, f: !!ref_for } : ref3 : null;
   };
   function createBaseVNode(type, props2 = null, children = null, patchFlag = 0, dynamicProps = null, shapeFlag = type === Fragment ? 0 : 1, isBlockNode = false, needFullChildrenNormalization = false) {
     const vnode = {
@@ -8034,7 +8034,7 @@ For more details, see https://link.vuejs.org/feature-flags.`
         type.normalize(vnode);
       }
     } else if (children) {
-      vnode.shapeFlag |= isString$2(children) ? 8 : 16;
+      vnode.shapeFlag |= isString$1(children) ? 8 : 16;
     }
     if (vnode.key !== vnode.key) {
       warn$1(`VNode created with invalid key (NaN). VNode type:`, vnode.type);
@@ -8086,17 +8086,17 @@ For more details, see https://link.vuejs.org/feature-flags.`
     if (props2) {
       props2 = guardReactiveProps(props2);
       let { class: klass, style } = props2;
-      if (klass && !isString$2(klass)) {
+      if (klass && !isString$1(klass)) {
         props2.class = normalizeClass(klass);
       }
-      if (isObject$2(style)) {
-        if (isProxy(style) && !isArray$2(style)) {
+      if (isObject$1(style)) {
+        if (isProxy(style) && !isArray$1(style)) {
           style = extend({}, style);
         }
         props2.style = normalizeStyle(style);
       }
     }
-    const shapeFlag = isString$2(type) ? 1 : isSuspense(type) ? 128 : isTeleport(type) ? 64 : isObject$2(type) ? 4 : isFunction$3(type) ? 2 : 0;
+    const shapeFlag = isString$1(type) ? 1 : isSuspense(type) ? 128 : isTeleport(type) ? 64 : isObject$1(type) ? 4 : isFunction$2(type) ? 2 : 0;
     if (shapeFlag & 4 && isProxy(type)) {
       type = toRaw(type);
       warn$1(
@@ -8134,11 +8134,11 @@ Component that was made reactive: `,
         // #2078 in the case of <component :is="vnode" ref="extra"/>
         // if the vnode itself already has a ref, cloneVNode will need to merge
         // the refs so the single vnode can be set on multiple refs
-        mergeRef && ref3 ? isArray$2(ref3) ? ref3.concat(normalizeRef(extraProps)) : [ref3, normalizeRef(extraProps)] : normalizeRef(extraProps)
+        mergeRef && ref3 ? isArray$1(ref3) ? ref3.concat(normalizeRef(extraProps)) : [ref3, normalizeRef(extraProps)] : normalizeRef(extraProps)
       ) : ref3,
       scopeId: vnode.scopeId,
       slotScopeIds: vnode.slotScopeIds,
-      children: patchFlag === -1 && isArray$2(children) ? children.map(deepCloneVNode) : children,
+      children: patchFlag === -1 && isArray$1(children) ? children.map(deepCloneVNode) : children,
       target: vnode.target,
       targetStart: vnode.targetStart,
       targetAnchor: vnode.targetAnchor,
@@ -8178,7 +8178,7 @@ Component that was made reactive: `,
   }
   function deepCloneVNode(vnode) {
     const cloned = cloneVNode(vnode);
-    if (isArray$2(vnode.children)) {
+    if (isArray$1(vnode.children)) {
       cloned.children = vnode.children.map(deepCloneVNode);
     }
     return cloned;
@@ -8192,7 +8192,7 @@ Component that was made reactive: `,
   function normalizeVNode(child) {
     if (child == null || typeof child === "boolean") {
       return createVNode(Comment);
-    } else if (isArray$2(child)) {
+    } else if (isArray$1(child)) {
       return createVNode(
         Fragment,
         null,
@@ -8213,7 +8213,7 @@ Component that was made reactive: `,
     const { shapeFlag } = vnode;
     if (children == null) {
       children = null;
-    } else if (isArray$2(children)) {
+    } else if (isArray$1(children)) {
       type = 16;
     } else if (typeof children === "object") {
       if (shapeFlag & (1 | 64)) {
@@ -8238,7 +8238,7 @@ Component that was made reactive: `,
           }
         }
       }
-    } else if (isFunction$3(children)) {
+    } else if (isFunction$2(children)) {
       children = { default: children, _ctx: currentRenderingInstance };
       type = 32;
     } else {
@@ -8267,7 +8267,7 @@ Component that was made reactive: `,
         } else if (isOn(key)) {
           const existing = ret[key];
           const incoming = toMerge[key];
-          if (incoming && existing !== incoming && !(isArray$2(existing) && existing.includes(incoming))) {
+          if (incoming && existing !== incoming && !(isArray$1(existing) && existing.includes(incoming))) {
             ret[key] = existing ? [].concat(existing, incoming) : incoming;
           }
         } else if (key !== "") {
@@ -8477,7 +8477,7 @@ Component that was made reactive: `,
           setupContext
         ]
       );
-      const isAsyncSetup = isPromise$1(setupResult);
+      const isAsyncSetup = isPromise(setupResult);
       resetTracking();
       reset();
       if ((isAsyncSetup || instance.sp) && !isAsyncWrapper(instance)) {
@@ -8508,13 +8508,13 @@ Component that was made reactive: `,
     }
   }
   function handleSetupResult(instance, setupResult, isSSR) {
-    if (isFunction$3(setupResult)) {
+    if (isFunction$2(setupResult)) {
       if (instance.type.__ssrInlineRender) {
         instance.ssrRender = setupResult;
       } else {
         instance.render = setupResult;
       }
-    } else if (isObject$2(setupResult)) {
+    } else if (isObject$1(setupResult)) {
       if (isVNode(setupResult)) {
         warn$1(
           `setup() should not return VNodes directly - return a render function instead.`
@@ -8538,7 +8538,7 @@ Component that was made reactive: `,
   function finishComponentSetup(instance, isSSR, skipOptions) {
     const Component = instance.type;
     if (!instance.render) {
-      instance.render = Component.render || NOOP$1;
+      instance.render = Component.render || NOOP;
     }
     {
       const reset = setCurrentInstance(instance);
@@ -8550,7 +8550,7 @@ Component that was made reactive: `,
         reset();
       }
     }
-    if (!Component.render && instance.render === NOOP$1 && !isSSR) {
+    if (!Component.render && instance.render === NOOP && !isSSR) {
       if (Component.template) {
         warn$1(
           `Component provided template option but runtime compilation is not supported in this build of Vue. Configure your bundler to alias "vue" to "vue/dist/vue.esm-bundler.js".`
@@ -8592,7 +8592,7 @@ Component that was made reactive: `,
         if (exposed != null) {
           let exposedType = typeof exposed;
           if (exposedType === "object") {
-            if (isArray$2(exposed)) {
+            if (isArray$1(exposed)) {
               exposedType = "array";
             } else if (isRef(exposed)) {
               exposedType = "ref";
@@ -8645,7 +8645,7 @@ Component that was made reactive: `,
   const classifyRE = /(?:^|[-_])(\w)/g;
   const classify = (str) => str.replace(classifyRE, (c2) => c2.toUpperCase()).replace(/[-_]/g, "");
   function getComponentName(Component, includeInferred = true) {
-    return isFunction$3(Component) ? Component.displayName || Component.name : Component.name || includeInferred && Component.__name;
+    return isFunction$2(Component) ? Component.displayName || Component.name : Component.name || includeInferred && Component.__name;
   }
   function formatComponentName(instance, Component, isRoot = false) {
     let name = getComponentName(Component);
@@ -8670,7 +8670,7 @@ Component that was made reactive: `,
     return name ? classify(name) : isRoot ? `App` : `Anonymous`;
   }
   function isClassComponent(value) {
-    return isFunction$3(value) && "__vccOpts" in value;
+    return isFunction$2(value) && "__vccOpts" in value;
   }
   const computed = (getterOrOptions, debugOptions) => {
     const c2 = computed$1(getterOrOptions, debugOptions, isInSSRComponentSetup);
@@ -8685,7 +8685,7 @@ Component that was made reactive: `,
   function h$1(type, propsOrChildren, children) {
     const l2 = arguments.length;
     if (l2 === 2) {
-      if (isObject$2(propsOrChildren) && !isArray$2(propsOrChildren)) {
+      if (isObject$1(propsOrChildren) && !isArray$1(propsOrChildren)) {
         if (isVNode(propsOrChildren)) {
           return createVNode(type, null, [propsOrChildren]);
         }
@@ -8713,7 +8713,7 @@ Component that was made reactive: `,
     const formatter2 = {
       __vue_custom_formatter: true,
       header(obj) {
-        if (!isObject$2(obj)) {
+        if (!isObject$1(obj)) {
           return null;
         }
         if (obj.__isVue) {
@@ -8835,7 +8835,7 @@ Component that was made reactive: `,
         return ["span", stringStyle, JSON.stringify(v2)];
       } else if (typeof v2 === "boolean") {
         return ["span", keywordStyle, v2];
-      } else if (isObject$2(v2)) {
+      } else if (isObject$1(v2)) {
         return ["object", { object: asRaw ? toRaw(v2) : v2 }];
       } else {
         return ["span", stringStyle, String(v2)];
@@ -8843,7 +8843,7 @@ Component that was made reactive: `,
     }
     function extractKeys(instance, type) {
       const Comp = instance.type;
-      if (isFunction$3(Comp)) {
+      if (isFunction$2(Comp)) {
         return;
       }
       const extracted = {};
@@ -8856,7 +8856,7 @@ Component that was made reactive: `,
     }
     function isKeyOfType(Comp, key, type) {
       const opts = Comp[type];
-      if (isArray$2(opts) && opts.includes(key) || isObject$2(opts) && key in opts) {
+      if (isArray$1(opts) && opts.includes(key) || isObject$1(opts) && key in opts) {
         return true;
       }
       if (Comp.extends && isKeyOfType(Comp.extends, key, type)) {
@@ -9003,14 +9003,14 @@ Component that was made reactive: `,
     (props2, { slots }) => h$1(BaseTransition, resolveTransitionProps(props2), slots)
   );
   const callHook = (hook, args = []) => {
-    if (isArray$2(hook)) {
+    if (isArray$1(hook)) {
       hook.forEach((h2) => h2(...args));
     } else if (hook) {
       hook(...args);
     }
   };
   const hasExplicitCallback = (hook) => {
-    return hook ? isArray$2(hook) ? hook.some((h2) => h2.length > 1) : hook.length > 1 : false;
+    return hook ? isArray$1(hook) ? hook.some((h2) => h2.length > 1) : hook.length > 1 : false;
   };
   function resolveTransitionProps(rawProps) {
     const baseProps = {};
@@ -9129,7 +9129,7 @@ Component that was made reactive: `,
   function normalizeDuration(duration) {
     if (duration == null) {
       return null;
-    } else if (isObject$2(duration)) {
+    } else if (isObject$1(duration)) {
       return [NumberOf(duration.enter), NumberOf(duration.leave)];
     } else {
       const n = NumberOf(duration);
@@ -9307,11 +9307,11 @@ Component that was made reactive: `,
   const displayRE = /(^|;)\s*display\s*:/;
   function patchStyle(el, prev, next) {
     const style = el.style;
-    const isCssString = isString$2(next);
+    const isCssString = isString$1(next);
     let hasControlledDisplay = false;
     if (next && !isCssString) {
       if (prev) {
-        if (!isString$2(prev)) {
+        if (!isString$1(prev)) {
           for (const key in prev) {
             if (next[key] == null) {
               setStyle$1(style, key, "");
@@ -9356,7 +9356,7 @@ Component that was made reactive: `,
   const semicolonRE = /[^\\];\s*$/;
   const importantRE = /\s*!important$/;
   function setStyle$1(style, name, val) {
-    if (isArray$2(val)) {
+    if (isArray$1(val)) {
       val.forEach((v2) => setStyle$1(style, name, v2));
     } else {
       if (val == null) val = "";
@@ -9373,7 +9373,7 @@ Component that was made reactive: `,
         const prefixed = autoPrefix(style, name);
         if (importantRE.test(val)) {
           style.setProperty(
-            hyphenate$1(prefixed),
+            hyphenate(prefixed),
             val.replace(importantRE, ""),
             "important"
           );
@@ -9390,11 +9390,11 @@ Component that was made reactive: `,
     if (cached) {
       return cached;
     }
-    let name = camelize$1(rawName);
+    let name = camelize(rawName);
     if (name !== "filter" && name in style) {
       return prefixCache[rawName] = name;
     }
-    name = capitalize$2(name);
+    name = capitalize$1(name);
     for (let i = 0; i < prefixes.length; i++) {
       const prefixed = prefixes[i] + name;
       if (prefixed in style) {
@@ -9509,7 +9509,7 @@ Component that was made reactive: `,
         options[m2[0].toLowerCase()] = true;
       }
     }
-    const event = name[2] === ":" ? name.slice(3) : hyphenate$1(name.slice(2));
+    const event = name[2] === ":" ? name.slice(3) : hyphenate(name.slice(2));
     return [event, options];
   }
   let cachedNow = 0;
@@ -9534,17 +9534,17 @@ Component that was made reactive: `,
     return invoker;
   }
   function sanitizeEventValue(value, propName) {
-    if (isFunction$3(value) || isArray$2(value)) {
+    if (isFunction$2(value) || isArray$1(value)) {
       return value;
     }
     warn(
       `Wrong type passed as event handler to ${propName} - did you forget @ or : in front of your prop?
 Expected function or array of functions, received type ${typeof value}.`
     );
-    return NOOP$1;
+    return NOOP;
   }
   function patchStopImmediatePropagation(e, value) {
-    if (isArray$2(value)) {
+    if (isArray$1(value)) {
       const originalStop = e.stopImmediatePropagation;
       e.stopImmediatePropagation = () => {
         originalStop.call(e);
@@ -9576,9 +9576,9 @@ Expected function or array of functions, received type ${typeof value}.`
       }
     } else if (
       // #11081 force set props for possible async custom element
-      el._isVueCE && (/[A-Z]/.test(key) || !isString$2(nextValue))
+      el._isVueCE && (/[A-Z]/.test(key) || !isString$1(nextValue))
     ) {
-      patchDOMProp(el, camelize$1(key), nextValue, parentComponent, key);
+      patchDOMProp(el, camelize(key), nextValue, parentComponent, key);
     } else {
       if (key === "true-value") {
         el._trueValue = nextValue;
@@ -9593,7 +9593,7 @@ Expected function or array of functions, received type ${typeof value}.`
       if (key === "innerHTML" || key === "textContent") {
         return true;
       }
-      if (key in el && isNativeOn(key) && isFunction$3(value)) {
+      if (key in el && isNativeOn(key) && isFunction$2(value)) {
         return true;
       }
       return false;
@@ -9616,7 +9616,7 @@ Expected function or array of functions, received type ${typeof value}.`
         return false;
       }
     }
-    if (isNativeOn(key) && isString$2(value)) {
+    if (isNativeOn(key) && isString$1(value)) {
       return false;
     }
     return key in el;
@@ -9761,7 +9761,7 @@ Expected function or array of functions, received type ${typeof value}.`
   }
   const getModelAssigner = (vnode) => {
     const fn2 = vnode.props["onUpdate:modelValue"] || false;
-    return isArray$2(fn2) ? (value) => invokeArrayFns(fn2, value) : fn2;
+    return isArray$1(fn2) ? (value) => invokeArrayFns(fn2, value) : fn2;
   };
   function onCompositionStart(e) {
     e.target.composing = true;
@@ -9833,7 +9833,7 @@ Expected function or array of functions, received type ${typeof value}.`
         const elementValue = getValue$2(el);
         const checked = el.checked;
         const assign = el[assignKey];
-        if (isArray$2(modelValue)) {
+        if (isArray$1(modelValue)) {
           const index = looseIndexOf(modelValue, elementValue);
           const found = index !== -1;
           if (checked && !found) {
@@ -9866,7 +9866,7 @@ Expected function or array of functions, received type ${typeof value}.`
   function setChecked(el, { value, oldValue }, vnode) {
     el._modelValue = value;
     let checked;
-    if (isArray$2(value)) {
+    if (isArray$1(value)) {
       checked = looseIndexOf(value, vnode.props.value) > -1;
     } else if (isSet$1(value)) {
       checked = value.has(vnode.props.value);
@@ -9941,7 +9941,7 @@ Expected function or array of functions, received type ${typeof value}.`
       if (!("key" in event)) {
         return;
       }
-      const eventKey = hyphenate$1(event.key);
+      const eventKey = hyphenate(event.key);
       if (modifiers.some(
         (k) => k === eventKey || keyNames[k] === eventKey
       )) {
@@ -9968,7 +9968,7 @@ Expected function or array of functions, received type ${typeof value}.`
       const container = normalizeContainer(containerOrSelector);
       if (!container) return;
       const component2 = app._component;
-      if (!isFunction$3(component2) && !component2.render && !component2.template) {
+      if (!isFunction$2(component2) && !component2.render && !component2.template) {
         component2.template = container.innerHTML;
       }
       if (container.nodeType === 1) {
@@ -10027,7 +10027,7 @@ Expected function or array of functions, received type ${typeof value}.`
     }
   }
   function normalizeContainer(container) {
-    if (isString$2(container)) {
+    if (isString$1(container)) {
       const res = document.querySelector(container);
       if (!res) {
         warn(
@@ -10129,44 +10129,6 @@ Expected function or array of functions, received type ${typeof value}.`
       cssVarBlockName
     };
   };
-  /**
-  * @vue/shared v3.4.15
-  * (c) 2018-present Yuxi (Evan) You and Vue contributors
-  * @license MIT
-  **/
-  const NOOP = () => {
-  };
-  const hasOwnProperty$d = Object.prototype.hasOwnProperty;
-  const hasOwn = (val, key) => hasOwnProperty$d.call(val, key);
-  const isArray$1 = Array.isArray;
-  const isDate = (val) => toTypeString(val) === "[object Date]";
-  const isFunction$2 = (val) => typeof val === "function";
-  const isString$1 = (val) => typeof val === "string";
-  const isObject$1 = (val) => val !== null && typeof val === "object";
-  const isPromise = (val) => {
-    return (isObject$1(val) || isFunction$2(val)) && isFunction$2(val.then) && isFunction$2(val.catch);
-  };
-  const objectToString$1 = Object.prototype.toString;
-  const toTypeString = (value) => objectToString$1.call(value);
-  const isPlainObject$1 = (val) => toTypeString(val) === "[object Object]";
-  const cacheStringFunction = (fn2) => {
-    const cache2 = /* @__PURE__ */ Object.create(null);
-    return (str) => {
-      const hit = cache2[str];
-      return hit || (cache2[str] = fn2(str));
-    };
-  };
-  const camelizeRE = /-(\w)/g;
-  const camelize = cacheStringFunction((str) => {
-    return str.replace(camelizeRE, (_2, c2) => c2 ? c2.toUpperCase() : "");
-  });
-  const hyphenateRE = /\B([A-Z])/g;
-  const hyphenate = cacheStringFunction(
-    (str) => str.replace(hyphenateRE, "-$1").toLowerCase()
-  );
-  const capitalize$1 = cacheStringFunction((str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  });
   var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
   var freeSelf = typeof self == "object" && self && self.Object === Object && self;
   var root = freeGlobal || freeSelf || Function("return this")();

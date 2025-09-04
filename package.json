@@ -6,6 +6,7 @@
   "scripts": {
     "dev:apps/vue-app1": "pnpm --filter \"./apps/vue-app1\" dev",
     "dev:vue3-vant": "pnpm --filter \"./apps/vue3-vant\" dev",
+    "dev:demovue3": "pnpm --filter \"./apps/vue3-demo\" dev",
     "dev:wxt": "pnpm --filter \"./apps/browser_wxt\" dev",
     "build:apps/vue-app1": "pnpm --filter \"./apps/vue-app1\" build",
     "lint:apps/vue-app1": "pnpm --filter \"./apps/vue-app1\" lint",
