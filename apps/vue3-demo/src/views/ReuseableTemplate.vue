@@ -1,12 +1,11 @@
 <script setup lang="ts">
 // import TheWelcome from '../components/TheWelcome.vue'
-// import ReuseableTemplate from '../components/ReuseableTemplate/ReuseableTemplate.vue'
+import ReuseableTemplate from '../components/ReuseableTemplate/ReuseableTemplate.vue'
 </script>
 
 <template>
   <main>
-    Home
     <!-- <TheWelcome /> -->
-    <!-- <ReuseableTemplate /> -->
+    <ReuseableTemplate />
   </main>
 </template>

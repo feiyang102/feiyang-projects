@@ -1,10 +1,39 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
+import { ref } from 'vue'
+// import HelloWorld from './components/HelloWorld.vue'
+import router from './router'
+// import { ElSelect, ElOption } from 'element-plus'
+// import 'element-plus/dist/index.css'
+
+// 存储当前选中的路由
+const selectedRoute = ref('')
+
+// 处理路由选择变化
+const handleRouteChange = (value: string) => {
+  if (value) {
+    router.push(value)
+  }
+}
 </script>
 
 <template>
-  <header>
+  <div class="header">
+    <el-col :span="8">
+      <el-select v-model="selectedRoute" placeholder="请选择路由" @change="handleRouteChange">
+        <el-option
+          v-for="route in router.options.routes"
+          :key="route.name"
+          :label="route.name"
+          :value="route.path"
+        />
+      </el-select>
+    </el-col>
+  </div>
+  <div class="content">
+    <RouterView />
+  </div>
+  <!-- <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
@@ -13,20 +42,36 @@ import HelloWorld from './components/HelloWorld.vue'
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/chart">Chart</RouterLink>
       </nav>
     </div>
-  </header>
-
-  <RouterView />
+  </header> -->
 </template>
 
+<style>
+/* #app {
+  height: 100vh;
+} */
+</style>
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.header {
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  background-color: antiquewhite;
+}
+.content {
+  height: calc(100vh - 60px);
+  margin-top: 60px;
 }
 
-.logo {
+/* .logo {
   display: block;
   margin: 0 auto 2rem;
 }
@@ -81,5 +126,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
+} */
 </style>
