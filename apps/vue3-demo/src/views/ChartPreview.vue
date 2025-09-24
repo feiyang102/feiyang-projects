@@ -1,10 +1,16 @@
 <script lang="ts" setup>
-// import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import ChartLine from '../components/ChartPreview/ChartLine.vue'
+// import ChartBar from '../components/ChartPreview/ChartBar.vue'
+// import ChartPie from '../components/ChartPreview/ChartPie.vue'
+
+const chartLineRef = ref()
 </script>
 
 <template>
-  <div ref="chartContainer">
-    <ChartLine />
+  <div>
+    <ChartLine ref="chartLineRef" title="ChartLine" />
+    <!-- <ChartBar title="ChartBar" />
+    <ChartPie title="ChartPie" /> -->
   </div>
 </template>

@@ -9,19 +9,21 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import * as echarts from 'echarts'
-import type { ECharts } from 'echarts'
+import type { ECharts, EChartsOption } from 'echarts'
 
 // Props定义
 interface ChartBaseProps {
   width?: string | number
   height?: string | number
   autoResize?: boolean
+  title?: string
 }
 
 // 定义props，提供默认值
 const props = withDefaults(defineProps<ChartBaseProps>(), {
   width: '100%' as string | number,
   height: '400px' as string | number,
+  title: '' as string,
   autoResize: true,
 })
 
@@ -37,6 +39,9 @@ const chartContainerRef = ref<HTMLDivElement>()
 // 图表实例
 let chartInstance: ECharts | null = null
 
+// 缓存的图表配置，用于图表初始化前调用setOption时
+let cachedOption: EChartsOption | null = null
+
 const throttle = <T extends (...args: unknown[]) => unknown>(func: T, wait: number): T => {
   let timeout: ReturnType<typeof setTimeout> | null = null
   return function (this: unknown, ...args: Parameters<T>): void {
@@ -51,7 +56,6 @@ const throttle = <T extends (...args: unknown[]) => unknown>(func: T, wait: numb
 
 // 初始化图表
 const initChart = () => {
-  debugger
   if (!chartContainerRef.value) return
 
   // 销毁已存在的图表实例
@@ -61,7 +65,13 @@ const initChart = () => {
 
   // 创建新的图表实例
   chartInstance = echarts.init(chartContainerRef.value)
-  debugger
+
+  // 图表初始化后，如果有缓存的配置，则直接渲染
+  if (cachedOption) {
+    chartInstance.setOption(cachedOption)
+    // 使用完缓存的配置后，将其销毁
+    cachedOption = null
+  }
 
   // 图表初始化后，需要通过setOption方法设置图表配置
   emit('chart-mounted', chartInstance)
@@ -72,6 +82,16 @@ const resizeChart = () => {
   nextTick(() => {
     chartInstance?.resize()
   })
+}
+
+const setOption = (options: EChartsOption) => {
+  // 如果图表实例已存在，直接设置配置
+  if (chartInstance) {
+    chartInstance.setOption(options)
+  } else {
+    // 如果图表实例不存在，缓存配置
+    cachedOption = options
+  }
 }
 
 // 节流后的resize函数
@@ -95,6 +115,7 @@ onMounted(() => {
   if (props.autoResize) {
     window.addEventListener('resize', throttledResize)
   }
+  console.log(`${props.title} ChartBase onMounted`)
 })
 
 onUnmounted(() => {
@@ -112,12 +133,11 @@ onUnmounted(() => {
 
 // 暴露方法给父组件
 defineExpose({
+  setOption,
   resizeChart,
   getChartInstance: () => chartInstance,
-  setOption: (options: echarts.EChartsOption) => {
-    chartInstance?.setOption(options)
-  },
 })
+console.log(`${props.title} ChartBase created`)
 </script>
 
 <style scoped>
