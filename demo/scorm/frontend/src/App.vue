@@ -349,7 +349,7 @@ onMounted(() => {
         >
           <el-table-column prop="name" label="课程名称" min-width="180"></el-table-column>
           <el-table-column prop="lastModified" label="上传时间" min-width="180"></el-table-column>
-          <el-table-column label="操作" width="150" fixed="right">
+          <el-table-column label="操作" width="180" fixed="right">
             <template #default="scope">
               <el-button 
                 type="primary" 
