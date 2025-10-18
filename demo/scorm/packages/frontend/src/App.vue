@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, toRefs } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 
 const courses = ref([]);
@@ -9,7 +9,15 @@ const form = reactive({
   description: '',
   duration: ''
 });
+const editForm = reactive({
+  id: '',
+  title: '',
+  description: '',
+  duration: ''
+});
 const formRef = ref(null);
+const editFormRef = ref(null);
+const editDialogVisible = ref(false);
 const formRules = {
   title: [
     { required: true, message: '请输入课程标题', trigger: 'blur' },
@@ -104,6 +112,61 @@ const deleteCourse = async (courseId, courseTitle) => {
   }
 };
 
+// 打开编辑对话框
+const openEditDialog = (course) => {
+  // 复制课程数据到编辑表单
+  Object.assign(editForm, course);
+  editDialogVisible.value = true;
+};
+
+// 更新课程
+const updateCourse = async () => {
+  try {
+    await editFormRef.value.validate();
+    
+    const response = await fetch(`http://localhost:3000/api/courses/${editForm.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title: editForm.title,
+        description: editForm.description,
+        duration: editForm.duration
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error('更新课程失败');
+    }
+    
+    const updatedCourse = await response.json();
+    
+    // 更新课程列表中的数据
+    const index = courses.value.findIndex(course => course.id === editForm.id);
+    if (index !== -1) {
+      courses.value[index] = updatedCourse;
+    }
+    
+    editDialogVisible.value = false;
+    ElMessage.success('课程更新成功');
+  } catch (err) {
+    if (err.message !== '表单验证失败') {
+      ElMessage.error(`更新课程失败: ${err.message}`);
+    }
+    console.error('更新课程失败:', err);
+  }
+};
+
+// 关闭编辑对话框
+const closeEditDialog = () => {
+  editDialogVisible.value = false;
+  // 重置表单
+  if (editFormRef.value) {
+    editFormRef.value.resetFields();
+  }
+};
+
 // 刷新课程列表
 const refreshCourses = () => {
   fetchCourses();
@@ -156,6 +219,15 @@ onMounted(() => {
                   <h3 class="course-title">{{ course.title }}</h3>
                   <div class="course-actions">
                     <el-tag size="small" effect="plain">{{ course.duration }}</el-tag>
+                    <el-button 
+                      type="primary" 
+                      size="small" 
+                      circle 
+                      @click="openEditDialog(course)"
+                      title="编辑课程"
+                    >
+                      <el-icon><Edit /></el-icon>
+                    </el-button>
                     <el-button 
                       type="danger" 
                       size="small" 
@@ -220,6 +292,45 @@ onMounted(() => {
       </el-card>
     </el-card>
   </div>
+  
+  <!-- 编辑课程对话框 -->
+  <el-dialog
+    v-model="editDialogVisible"
+    title="编辑课程"
+    width="500px"
+    :before-close="closeEditDialog"
+  >
+    <el-form 
+      ref="editFormRef" 
+      :model="editForm" 
+      :rules="formRules" 
+      label-width="100px"
+    >
+      <el-form-item label="课程标题" prop="title">
+        <el-input v-model="editForm.title" placeholder="请输入课程标题" maxlength="50" show-word-limit />
+      </el-form-item>
+      
+      <el-form-item label="课程描述" prop="description">
+        <el-input 
+          v-model="editForm.description" 
+          type="textarea" 
+          placeholder="请输入课程描述" 
+          :rows="3" 
+          maxlength="500" 
+          show-word-limit 
+        />
+      </el-form-item>
+      
+      <el-form-item label="课程时长" prop="duration">
+        <el-input v-model="editForm.duration" placeholder="例如: 2小时" />
+      </el-form-item>
+    </el-form>
+    
+    <template #footer>
+      <el-button @click="closeEditDialog">取消</el-button>
+      <el-button type="primary" @click="updateCourse">保存修改</el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
@@ -227,7 +338,8 @@ onMounted(() => {
 import {
   Plus,
   Refresh,
-  Delete
+  Delete,
+  Edit
 } from '@element-plus/icons-vue'
 </script>
 
