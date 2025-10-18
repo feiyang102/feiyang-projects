@@ -1,9 +1,12 @@
 <script setup>
 import { ref, onMounted, reactive, toRefs } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { UploadFilled, Document, Refresh, Delete } from '@element-plus/icons-vue';
 
 const courses = ref([]);
+const scormCourses = ref([]);
 const loading = ref(true);
+const scormLoading = ref(true);
 const form = reactive({
   title: '',
   description: '',
@@ -18,6 +21,7 @@ const editForm = reactive({
 const formRef = ref(null);
 const editFormRef = ref(null);
 const editDialogVisible = ref(false);
+const uploadLoading = ref(false);
 const formRules = {
   title: [
     { required: true, message: '请输入课程标题', trigger: 'blur' },
@@ -167,14 +171,113 @@ const closeEditDialog = () => {
   }
 };
 
+// 加载SCORM课程列表
+const fetchScormCourses = async () => {
+  try {
+    scormLoading.value = true;
+    const response = await fetch('http://localhost:3000/api/scorm-courses');
+    if (!response.ok) {
+      throw new Error('网络响应错误');
+    }
+    scormCourses.value = await response.json();
+  } catch (err) {
+    ElMessage.error(`获取SCORM课程失败: ${err.message}`);
+    console.error('获取SCORM课程失败:', err);
+  } finally {
+    scormCourses.value = scormCourses.value.map(course => ({
+      ...course,
+      lastModified: new Date(course.lastModified).toLocaleString()
+    }));
+    scormLoading.value = false;
+  }
+};
+
+// 处理文件上传
+const handleFileUpload = async (file) => {
+  try {
+    uploadLoading.value = true;
+    
+    // 确保中文文件名正确处理
+    const courseName = file.name.replace(/\.zip$/i, '');
+    const formData = new FormData();
+    formData.append('file', file.raw);
+    formData.append('courseName', courseName);
+    
+    const response = await fetch('http://localhost:3000/api/upload-scorm', {
+      method: 'POST',
+      body: formData
+    });
+    
+    if (!response.ok) {
+      throw new Error('上传失败');
+    }
+    
+    const result = await response.json();
+    ElMessage.success(`文件上传成功: ${result.courseName}`);
+    
+    // 重新加载SCORM课程列表
+    await fetchScormCourses();
+    
+    return true;
+  } catch (err) {
+    ElMessage.error(`文件上传失败: ${err.message}`);
+    console.error('文件上传失败:', err);
+    return false;
+  } finally {
+    uploadLoading.value = false;
+  }
+};
+
+// 预览SCORM课程
+const previewScormCourse = (course) => {
+  const url = `http://localhost:3000${course.path}/index.html`;
+  window.open(url, '_blank');
+};
+
+// 删除SCORM课程
+const deleteScormCourse = async (courseName) => {
+  try {
+    await ElMessageBox.confirm(
+      `确定要删除SCORM课程「${courseName}」吗？此操作不可恢复。`,
+      '确认删除',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }
+    );
+    
+    const response = await fetch(`http://localhost:3000/api/scorm-courses/${encodeURIComponent(courseName)}`, {
+      method: 'DELETE'
+    });
+    
+    if (!response.ok) {
+      throw new Error('删除失败');
+    }
+    
+    ElMessage.success('SCORM课程删除成功');
+    await fetchScormCourses();
+  } catch (err) {
+    if (err.message !== 'cancel') {
+      ElMessage.error(`删除失败: ${err.message}`);
+    }
+  }
+};
+
 // 刷新课程列表
 const refreshCourses = () => {
   fetchCourses();
 };
 
+// 刷新SCORM课程列表
+const refreshScormCourses = () => {
+  fetchScormCourses();
+};
+
 // 组件挂载时获取课程
 onMounted(() => {
   fetchCourses();
+  fetchScormCourses();
 });
 </script>
 
@@ -190,8 +293,90 @@ onMounted(() => {
         </div>
       </template>
       
+      <!-- SCORM文件上传 -->
+      <el-card class="upload-card" shadow="hover" style="margin-bottom: 20px;">
+        <template #header>
+          <div class="card-header">
+            <span>SCORM包上传</span>
+          </div>
+        </template>
+        <el-upload
+          :file-list="[]"
+          accept=".zip"
+          :auto-upload="false"
+          :on-change="async (file, fileList) => {
+            if (file.raw) {
+              await handleFileUpload(file);
+            }
+          }"
+          :before-upload="(file) => {
+            const isZip = file.name.endsWith('.zip');
+            if (!isZip) {
+              ElMessage.error('只能上传zip格式的文件！');
+              return false;
+            }
+            return false; // 阻止默认上传
+          }"
+          :limit="1"
+          :show-file-list="false"
+        >
+          <el-button 
+            type="success" 
+            :loading="uploadLoading"
+            :icon="UploadFilled"
+            style="margin-right: 10px;"
+          >
+            {{ uploadLoading ? '上传中...' : '上传SCORM包' }}
+          </el-button>
+          <span class="upload-tip" style="color: #909399; font-size: 13px;">（仅支持.zip格式的SCORM包）</span>
+        </el-upload>
+      </el-card>
+
+      <!-- SCORM课程列表 -->
+      <el-card class="scorm-card" shadow="hover" style="margin-top: 20px;">
+        <template #header>
+          <div class="card-header">
+            <span>已上传的SCORM课程</span>
+            <el-button type="info" plain @click="refreshScormCourses" size="small">
+              <el-icon><Refresh /></el-icon> 刷新
+            </el-button>
+          </div>
+        </template>
+        <el-table 
+          v-loading="scormLoading" 
+          :data="scormCourses" 
+          style="width: 100%"
+        >
+          <el-table-column prop="name" label="课程名称" min-width="180"></el-table-column>
+          <el-table-column prop="lastModified" label="上传时间" min-width="180"></el-table-column>
+          <el-table-column label="操作" width="150" fixed="right">
+            <template #default="scope">
+              <el-button 
+                type="primary" 
+                size="small" 
+                @click="previewScormCourse(scope.row)"
+                :icon="Document"
+              >
+                预览
+              </el-button>
+              <el-button 
+                type="danger" 
+                size="small" 
+                @click="deleteScormCourse(scope.row.name)"
+                :icon="Delete"
+              >
+                删除
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div v-if="!scormLoading && scormCourses.length === 0" class="empty-state" style="padding: 30px 0;">
+          <el-empty description="暂无上传的SCORM课程"></el-empty>
+        </div>
+      </el-card>
+
       <!-- 课程列表 -->
-      <el-card class="courses-card" shadow="hover">
+      <el-card class="courses-card" shadow="hover" style="margin-top: 20px;">
         <template #header>
           <div class="card-header">
             <span>课程列表</span>

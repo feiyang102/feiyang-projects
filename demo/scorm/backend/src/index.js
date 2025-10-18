@@ -1,8 +1,19 @@
 const express = require('express');
 const cors = require('cors');
 const Database = require('better-sqlite3');
+const fs = require('fs');
+const path = require('path');
+const multer = require('multer');
+const unzipper = require('unzipper');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// 创建scorm目录（如果不存在）
+const scormDir = path.join(__dirname, '../scorm');
+if (!fs.existsSync(scormDir)) {
+  fs.mkdirSync(scormDir, { recursive: true });
+  console.log('SCORM目录已创建');
+}
 
 // 创建数据库连接
 const db = new Database('./scorm.db');
@@ -52,6 +63,19 @@ initDatabase();
 // 中间件
 app.use(cors());
 app.use(express.json());
+
+// 配置multer用于文件上传
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: (req, file, cb) => {
+    // 只允许zip文件
+    if (file.mimetype === 'application/zip' || file.originalname.endsWith('.zip')) {
+      cb(null, true);
+    } else {
+      cb(new Error('只允许上传zip文件'), false);
+    }
+  }
+});
 
 // API接口示例
 app.get('/', (req, res) => {
@@ -166,6 +190,111 @@ app.delete('/api/courses/:id', (req, res) => {
   } catch (error) {
     console.error('删除课程失败:', error.message);
     res.status(500).json({ message: '服务器内部错误' });
+  }
+});
+
+// 上传和解压zip文件的API
+app.post('/api/upload-scorm', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: '没有上传文件' });
+    }
+    
+    // 优先使用前端传递的courseName参数，确保中文文件名正确处理
+    const fileName = req.body.courseName || decodeURIComponent(encodeURIComponent(path.parse(req.file.originalname).name));
+    const courseDir = path.join(scormDir, fileName);
+    
+    // 如果目录已存在，删除它
+    if (fs.existsSync(courseDir)) {
+      fs.rmSync(courseDir, { recursive: true, force: true });
+      console.log(`已删除已存在的目录: ${courseDir}`);
+    }
+    
+    // 创建目标目录
+    fs.mkdirSync(courseDir, { recursive: true });
+    
+    // 解压文件
+    await new Promise((resolve, reject) => {
+      const stream = unzipper.Extract({ path: courseDir });
+      
+      // 监听解压完成事件
+      stream.on('close', () => {
+        console.log(`文件解压完成: ${fileName}`);
+        resolve();
+      });
+      
+      // 监听错误事件
+      stream.on('error', (err) => {
+        console.error('解压失败:', err);
+        reject(err);
+      });
+      
+      // 将文件buffer写入流
+      const bufferStream = require('stream').Readable.from(req.file.buffer);
+      bufferStream.pipe(stream);
+    });
+    
+    // 返回成功响应
+    res.status(201).json({
+      message: '文件上传并解压成功',
+      courseName: fileName,
+      path: `/scorm/${fileName}`
+    });
+  } catch (error) {
+    console.error('文件上传或解压失败:', error.message);
+    res.status(500).json({ message: `操作失败: ${error.message}` });
+  }
+});
+
+// 提供scorm目录的静态文件访问，添加自定义处理确保中文文件名正确
+app.use('/scorm', (req, res, next) => {
+  // 解码URL路径中的中文文件名
+  req.url = decodeURIComponent(req.url);
+  next();
+}, express.static(scormDir));
+
+// 获取已上传的SCORM课程列表
+app.get('/api/scorm-courses', (req, res) => {
+  try {
+    if (!fs.existsSync(scormDir)) {
+      return res.json([]);
+    }
+    
+    const courses = fs.readdirSync(scormDir)
+      .filter(file => fs.statSync(path.join(scormDir, file)).isDirectory())
+      .map(dirName => ({
+        name: decodeURIComponent(encodeURIComponent(dirName)),
+        path: `/scorm/${encodeURIComponent(dirName)}`,
+        lastModified: fs.statSync(path.join(scormDir, dirName)).mtime
+      }));
+    
+    res.json(courses);
+  } catch (error) {
+    console.error('获取SCORM课程列表失败:', error.message);
+    res.status(500).json({ message: '获取课程列表失败' });
+  }
+});
+
+// 删除SCORM课程
+app.delete('/api/scorm-courses/:courseName', (req, res) => {
+  try {
+    // 对URL参数进行解码，确保中文文件名正确处理
+    const courseName = decodeURIComponent(req.params.courseName);
+    const courseDir = path.join(scormDir, courseName);
+    
+    // 检查目录是否存在
+    if (!fs.existsSync(courseDir)) {
+      return res.status(404).json({ message: 'SCORM课程不存在' });
+    }
+    
+    // 删除目录及其内容
+    fs.rmSync(courseDir, { recursive: true, force: true });
+    console.log(`已删除SCORM课程: ${courseName}`);
+    
+    res.json({ message: 'SCORM课程删除成功' });
+  } catch (error) {
+    console.error('删除SCORM课程失败:', error.message);
+    res.status(500).json({ message: `删除失败: ${error.message}` });
   }
 });
 
