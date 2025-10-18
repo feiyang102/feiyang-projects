@@ -1,0 +1,22 @@
+{
+  "name": "scorm-monorepo",
+  "version": "1.0.0",
+  "description": "A monorepo for SCORM project with Vue 3 frontend and Express backend",
+  "main": "index.js",
+  "scripts": {
+    "dev:frontend": "pnpm --filter frontend dev",
+    "dev:backend": "pnpm --filter backend dev",
+    "build:frontend": "pnpm --filter frontend build",
+    "build:backend": "pnpm --filter backend build",
+    "dev": "pnpm -r dev",
+    "build": "pnpm -r build"
+  },
+  "keywords": [
+    "monorepo",
+    "vue3",
+    "express",
+    "pnpm"
+  ],
+  "author": "",
+  "license": "ISC"
+}
