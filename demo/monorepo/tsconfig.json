@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@monorepo/utils": ["packages/utils/dist"],
+      "@monorepo/ui": ["packages/ui/dist"]
+    }
+  },
+  "include": ["packages/**/src", "apps/**/src"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}

@@ -1,0 +1,58 @@
+/* Card 组件样式 */
+.card {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+
+.card-shadow {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+  padding: 1rem 1.25rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-footer {
+  padding: 1rem 1.25rem;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+}
+
+/* 悬停效果 */
+.card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* 紧凑模式 */
+.card.compact .card-header,
+.card.compact .card-body,
+.card.compact .card-footer {
+  padding: 0.75rem 1rem;
+}
+
+/* 无边框模式 */
+.card.no-border {
+  border: none;
+}
+
+.card.no-border .card-header,
+.card.no-border .card-footer {
+  border: none;
+}

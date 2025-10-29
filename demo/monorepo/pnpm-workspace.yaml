@@ -1,0 +1,5 @@
+packages:
+  # 所有包都在 packages 目录下
+  - 'packages/*'
+  # 所有应用都在 apps 目录下
+  - 'apps/*'

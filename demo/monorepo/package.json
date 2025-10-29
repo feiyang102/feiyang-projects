@@ -1,0 +1,42 @@
+{
+  "name": "monorepo-demo",
+  "version": "1.0.0",
+  "description": "Monorepo技术演示项目，包含UI组件库、工具库、前端应用和后端API",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "dev:web": "pnpm --filter @monorepo/web run dev",
+    "dev:api": "pnpm --filter @monorepo/api run dev",
+    "build": "pnpm -r run build",
+    "build:ui": "pnpm --filter @monorepo/ui run build",
+    "build:utils": "pnpm --filter @monorepo/utils run build",
+    "build:web": "pnpm --filter @monorepo/web run build",
+    "build:api": "pnpm --filter @monorepo/api run build",
+    "test": "pnpm -r run test",
+    "lint": "pnpm -r run lint",
+    "clean": "pnpm -r run clean",
+    "install:all": "pnpm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": [
+    "monorepo",
+    "react",
+    "typescript",
+    "express",
+    "ui-components",
+    "utilities"
+  ],
+  "author": "Monorepo Demo Team",
+  "license": "MIT"
+}
