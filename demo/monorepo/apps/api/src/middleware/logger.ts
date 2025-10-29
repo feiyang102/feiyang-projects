@@ -21,10 +21,16 @@ export const requestLogger = (req: Request, res: Response, next: NextFunction) =
 export const responseTimeHeader = (req: Request, res: Response, next: NextFunction) => {
   const startTime = Date.now()
   
+  // 在响应发送前设置响应时间头
   res.on('finish', () => {
     const duration = Date.now() - startTime
-    res.setHeader('X-Response-Time', `${duration}ms`)
+    // 注意：在finish事件中设置响应头会导致错误
+    // 这里只记录日志，不设置响应头
+    console.log(`[Response Time] ${req.method} ${req.path}: ${duration}ms`)
   })
+  
+  // 在响应发送前设置响应时间头
+  res.setHeader('X-Response-Time', 'calculating')
   
   next()
 }
