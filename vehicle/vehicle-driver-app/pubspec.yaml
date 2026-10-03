@@ -1,0 +1,25 @@
+name: vehicle_driver_app
+description: 司机端 App（车辆调度平台 vehicle-driver-app）
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # 待补充（安装 Flutter SDK 后启用）：
+  # dio: ^5.4.0                # 网络请求（JWT、批量上报）
+  # flutter_riverpod: ^2.5.0   # 状态管理
+  # sqflite: ^2.3.0            # 本地缓存（离线轨迹点补传）
+  # flutter_baidu_mapapi_map: ^3.1.0  # 百度地图
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true

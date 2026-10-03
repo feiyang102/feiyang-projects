@@ -1,0 +1,24 @@
+{
+  "name": "vehicle",
+  "version": "0.1.0",
+  "private": true,
+  "description": "车辆调度平台 Monorepo（车辆管理系统 PC 端 / 行程申请 / 司机端 / 后端服务）",
+  "scripts": {
+    "dev:server": "pnpm --filter vehicle-server run start:dev",
+    "dev:location": "pnpm --filter vehicle-location-server run start:dev",
+    "dev:web": "pnpm --filter vehicle-web run dev",
+    "dev:order-app": "pnpm --filter vehicle-order-app run dev",
+    "build:server": "pnpm --filter vehicle-server run build",
+    "build:web": "pnpm --filter vehicle-web run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "unrs-resolver",
+      "vue-demi"
+    ]
+  }
+}

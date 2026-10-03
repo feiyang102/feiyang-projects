@@ -1,0 +1,5 @@
+packages:
+  - vehicle-server
+  - vehicle-location-server
+  - vehicle-web
+  - vehicle-order-app
