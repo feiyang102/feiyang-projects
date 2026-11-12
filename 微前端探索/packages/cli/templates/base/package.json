@@ -1,0 +1,27 @@
+{
+  "name": "__APP_NAME__",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5173",
+    "build": "vite build",
+    "preview": "vite preview --port 5173"
+  },
+  "dependencies": {
+    "@admin/auth": "^0.1.0",
+    "@admin/core": "^0.1.0",
+    "@admin/micro": "^0.1.0",
+    "@admin/ui": "^0.1.0",
+    "element-plus": "^2.9.1",
+    "pinia": "^2.3.1",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "wujie": "^1.0.28"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^7.0.0"
+  }
+}

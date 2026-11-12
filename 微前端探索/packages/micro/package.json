@@ -1,0 +1,48 @@
+{
+  "name": "@admin/micro",
+  "version": "0.1.0",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./adapters/wujie": {
+      "types": "./dist/adapters/wujie.d.ts",
+      "import": "./dist/adapters/wujie.js"
+    },
+    "./adapters/iframe": {
+      "types": "./dist/adapters/iframe.d.ts",
+      "import": "./dist/adapters/iframe.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup src/index.ts src/adapters/wujie.ts src/adapters/iframe.ts --format esm --dts --clean --external vue --external vue-router --external wujie --external wujie-vue3 --external @admin/core --external @admin/auth --external @admin/ui --external @admin/micro --external @admin/bridge"
+  },
+  "dependencies": {
+    "@admin/bridge": "workspace:*",
+    "@admin/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0",
+    "vue-router": "^4.3.0",
+    "wujie": "^1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "wujie": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^2.4.6",
+    "pinia": "^2.3.1",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "wujie": "^1.0.28"
+  }
+}
