@@ -1,0 +1,28 @@
+{
+  "name": "playground",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5173",
+    "build": "vite build",
+    "preview": "vite preview --port 5173"
+  },
+  "dependencies": {
+    "@admin/auth": "workspace:*",
+    "@admin/core": "workspace:*",
+    "@admin/micro": "workspace:*",
+    "@admin/ui": "workspace:*",
+    "element-plus": "^2.9.1",
+    "pinia": "^2.3.1",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "wujie": "^1.0.28"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^7.0.0",
+    "vue-tsc": "^2.2.0"
+  }
+}
